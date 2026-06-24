@@ -6,6 +6,7 @@ enum DashboardTab: String, CaseIterable, Identifiable {
     case history
     case stats
     case settings
+    case logs
 
     var id: String { rawValue }
 
@@ -15,6 +16,7 @@ enum DashboardTab: String, CaseIterable, Identifiable {
         case .history: return "History"
         case .stats: return "Stats"
         case .settings: return "Settings"
+        case .logs: return "Logs"
         }
     }
 
@@ -24,6 +26,7 @@ enum DashboardTab: String, CaseIterable, Identifiable {
         case .history: return "clock.arrow.circlepath"
         case .stats: return "chart.bar"
         case .settings: return "gearshape"
+        case .logs: return "doc.text.magnifyingglass"
         }
     }
 }
@@ -59,6 +62,7 @@ struct DashboardView: View {
         case .history: HistoryView()
         case .stats: StatsView()
         case .settings: SettingsView()
+        case .logs: LogsView()
         }
     }
 }
