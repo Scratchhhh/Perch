@@ -29,7 +29,9 @@ public final class Deduplicator: @unchecked Sendable {
         lock.lock()
         defer { lock.unlock() }
 
-        if let previous = lastSeen[key], time.timeIntervalSince(previous) < window, time >= previous {
+        // Absolute difference so a signal whose timestamp lands just before an earlier-arriving one
+        // (file-watch carrying a transcript timestamp vs. a live hook) is still treated as a dup.
+        if let previous = lastSeen[key], abs(time.timeIntervalSince(previous)) < window {
             return false
         }
         lastSeen[key] = time

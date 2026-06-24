@@ -14,6 +14,7 @@ final class AppEnvironment {
 
     @ObservationIgnored private let localNotifier: LocalNotifier
     @ObservationIgnored private let listener: LocalListener
+    @ObservationIgnored private let transcriptWatcher: TranscriptWatcher
 
     init() {
         let container = AppEnvironment.makeContainer()
@@ -35,6 +36,11 @@ final class AppEnvironment {
                 bus.ingest(message)
             }
         }
+        self.transcriptWatcher = TranscriptWatcher { message in
+            Task { @MainActor in
+                bus.ingest(message)
+            }
+        }
 
         start()
     }
@@ -50,6 +56,7 @@ final class AppEnvironment {
         } catch {
             PerchLog.listener.error("listener failed to start: \(error.localizedDescription, privacy: .public)")
         }
+        transcriptWatcher.start()
     }
 
     private static func makeContainer() -> ModelContainer {

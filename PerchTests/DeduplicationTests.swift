@@ -36,6 +36,16 @@ final class DeduplicationTests: XCTestCase {
         XCTAssertTrue(dedup.shouldProcess(sessionId: "s2", kind: .finished, at: now))
     }
 
+    func testOutOfOrderDuplicateIsDropped() {
+        let dedup = Deduplicator(window: 5)
+        let base = Date(timeIntervalSince1970: 5_000)
+
+        // A hook arrives first at base; the file watcher then reports the same finish but carries
+        // the transcript timestamp two seconds earlier.
+        XCTAssertTrue(dedup.shouldProcess(sessionId: "s1", kind: .finished, at: base))
+        XCTAssertFalse(dedup.shouldProcess(sessionId: "s1", kind: .finished, at: base.addingTimeInterval(-2)))
+    }
+
     func testResetClearsHistory() {
         let dedup = Deduplicator(window: 5)
         let now = Date(timeIntervalSince1970: 4_000)
