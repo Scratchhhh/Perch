@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 
 /// Renders as Form sections so it can live inside the Settings screen.
 struct IntegrationsSection: View {
@@ -79,8 +80,27 @@ private struct IntegrationRow: View {
                 Text("What changes")
                     .font(.caption)
             }
+
+            if let snippet = integration.rulesSnippet {
+                Button {
+                    copy(snippet)
+                } label: {
+                    Label("Copy prompt snippet", systemImage: "doc.on.doc")
+                        .font(.caption)
+                }
+                .buttonStyle(.borderless)
+                .help("Optional: paste into your project rules so the agent calls perch_notify.")
+            }
         }
         .padding(.vertical, 4)
+    }
+
+    private func copy(_ text: String) {
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.setString(text, forType: .string)
+        model.lastMessage = "Prompt snippet copied to the clipboard."
+        model.lastError = nil
     }
 
     @ViewBuilder

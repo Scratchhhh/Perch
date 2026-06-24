@@ -22,7 +22,11 @@ final class AppEnvironment {
         let notifier = LocalNotifier()
         self.localNotifier = notifier
         self.eventBus = EventBus(modelContext: container.mainContext, notifiers: [notifier])
-        self.integrations = IntegrationsModel(integrations: [ClaudeCodeHooksIntegration()])
+        self.integrations = IntegrationsModel(integrations: [
+            ClaudeCodeIntegration(),
+            CursorIntegration(),
+            CodexIntegration()
+        ])
 
         let token = TokenStore.loadOrCreate()
         let bus = self.eventBus

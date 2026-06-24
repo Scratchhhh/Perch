@@ -1,5 +1,19 @@
 import Foundation
 
+enum IntegrationError: LocalizedError {
+    case helperMissing
+    case notWritable(String)
+
+    var errorDescription: String? {
+        switch self {
+        case .helperMissing:
+            return "The bundled perch-helper could not be found inside the app."
+        case .notWritable(let path):
+            return "Could not write to \(path)."
+        }
+    }
+}
+
 enum IntegrationStatus: Sendable, Equatable {
     case notDetected
     case notInstalled
@@ -36,7 +50,14 @@ protocol Integration: AnyObject, Identifiable {
     /// A short, human-readable description of exactly what `install()` will write.
     var plannedChange: String { get }
 
+    /// Optional prompt snippet offered for environments without hooks. Never written automatically.
+    var rulesSnippet: String? { get }
+
     func refreshStatus() -> IntegrationStatus
     func install() throws -> IntegrationActionResult
     func uninstall() throws -> IntegrationActionResult
+}
+
+extension Integration {
+    var rulesSnippet: String? { nil }
 }
