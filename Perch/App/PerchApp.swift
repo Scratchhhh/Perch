@@ -8,6 +8,7 @@ struct PerchApp: App {
         MenuBarExtra {
             MenuBarContent()
                 .environment(environment.eventBus)
+                .environment(environment.preferences)
                 .modelContainer(environment.modelContainer)
         } label: {
             MenuBarLabel(state: environment.menuBarState)
@@ -18,6 +19,7 @@ struct PerchApp: App {
             DashboardView()
                 .environment(environment.eventBus)
                 .environment(environment.integrations)
+                .environment(environment.preferences)
                 .modelContainer(environment.modelContainer)
         }
         .defaultSize(width: 780, height: 540)

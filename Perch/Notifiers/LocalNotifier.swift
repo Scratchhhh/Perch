@@ -8,6 +8,7 @@ final class LocalNotifier: NSObject, Notifier {
     let id = "local"
 
     private let center = UNUserNotificationCenter.current()
+    private let preferences: PreferencesStore
 
     private enum CategoryID {
         static let done = "perch.done"
@@ -15,7 +16,8 @@ final class LocalNotifier: NSObject, Notifier {
         static let info = "perch.info"
     }
 
-    override init() {
+    init(preferences: PreferencesStore) {
+        self.preferences = preferences
         super.init()
         center.delegate = self
         registerCategories()
@@ -35,7 +37,7 @@ final class LocalNotifier: NSObject, Notifier {
         let note = UNMutableNotificationContent()
         note.title = content.title
         note.body = content.body
-        note.sound = .default
+        note.sound = nil
         note.categoryIdentifier = categoryIdentifier(for: content.category)
         note.userInfo = [
             "sessionId": content.sessionId,
@@ -51,6 +53,17 @@ final class LocalNotifier: NSObject, Notifier {
             if let error {
                 PerchLog.notifier.error("deliver failed: \(error.localizedDescription, privacy: .public)")
             }
+        }
+
+        playSound(for: content.category)
+    }
+
+    private func playSound(for category: NotificationContent.Category) {
+        guard preferences.soundsEnabled else { return }
+        switch category {
+        case .done: SoundPlayer.play(.done)
+        case .attention: SoundPlayer.play(.attention)
+        case .info: break
         }
     }
 
@@ -99,7 +112,7 @@ extension LocalNotifier: UNUserNotificationCenterDelegate {
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification
     ) async -> UNNotificationPresentationOptions {
-        [.banner, .sound, .list]
+        [.banner, .list]
     }
 
     nonisolated func userNotificationCenter(

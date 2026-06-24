@@ -11,6 +11,7 @@ final class AgentEvent {
     var kindRaw: String
     var message: String
     var transcriptPath: String?
+    var acknowledgedAt: Date?
     var session: AgentSession?
 
     init(
@@ -29,6 +30,11 @@ final class AgentEvent {
         self.kindRaw = kind.rawValue
         self.message = message
         self.transcriptPath = transcriptPath
+    }
+
+    /// Events that would otherwise have kept the user waiting at the terminal.
+    var isNotable: Bool {
+        kind == .finished || kind.demandsAttention
     }
 
     var source: AgentSource {

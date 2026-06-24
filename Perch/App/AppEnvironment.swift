@@ -11,18 +11,26 @@ final class AppEnvironment {
     let modelContainer: ModelContainer
     let eventBus: EventBus
     let integrations: IntegrationsModel
+    let preferences: PreferencesStore
 
     @ObservationIgnored private let localNotifier: LocalNotifier
     @ObservationIgnored private let listener: LocalListener
     @ObservationIgnored private let transcriptWatcher: TranscriptWatcher
+    @ObservationIgnored private let mascot: MascotController
 
     init() {
         let container = AppEnvironment.makeContainer()
         self.modelContainer = container
 
-        let notifier = LocalNotifier()
+        let preferences = PreferencesStore()
+        self.preferences = preferences
+
+        let notifier = LocalNotifier(preferences: preferences)
         self.localNotifier = notifier
-        self.eventBus = EventBus(modelContext: container.mainContext, notifiers: [notifier])
+
+        let bus = EventBus(modelContext: container.mainContext, preferences: preferences, notifiers: [notifier])
+        self.eventBus = bus
+        self.mascot = MascotController(eventBus: bus, preferences: preferences)
         self.integrations = IntegrationsModel(integrations: [
             ClaudeCodeIntegration(),
             CursorIntegration(),
@@ -30,7 +38,6 @@ final class AppEnvironment {
         ])
 
         let token = TokenStore.loadOrCreate()
-        let bus = self.eventBus
         self.listener = LocalListener(token: token) { message in
             Task { @MainActor in
                 bus.ingest(message)
@@ -57,6 +64,20 @@ final class AppEnvironment {
             PerchLog.listener.error("listener failed to start: \(error.localizedDescription, privacy: .public)")
         }
         transcriptWatcher.start()
+        mascot.setVisible(preferences.mascotEnabled)
+        observeMascotPreference()
+    }
+
+    private func observeMascotPreference() {
+        withObservationTracking {
+            _ = preferences.mascotEnabled
+        } onChange: { [weak self] in
+            Task { @MainActor in
+                guard let self else { return }
+                self.mascot.setVisible(self.preferences.mascotEnabled)
+                self.observeMascotPreference()
+            }
+        }
     }
 
     private static func makeContainer() -> ModelContainer {

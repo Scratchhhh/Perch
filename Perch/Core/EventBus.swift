@@ -10,6 +10,7 @@ import PerchCore
 final class EventBus {
     private let modelContext: ModelContext
     private let dedup: Deduplicator
+    private let preferences: PreferencesStore
     private var notifiers: [Notifier]
 
     var doNotDisturb = false
@@ -17,12 +18,18 @@ final class EventBus {
     private(set) var workingCount = 0
     private(set) var waitingCount = 0
     private(set) var lastEventAt: Date?
+    private(set) var lastKind: EventKind?
 
-    init(modelContext: ModelContext, notifiers: [Notifier], dedupWindow: TimeInterval = 5) {
+    init(modelContext: ModelContext, preferences: PreferencesStore, notifiers: [Notifier], dedupWindow: TimeInterval = 5) {
         self.modelContext = modelContext
+        self.preferences = preferences
         self.dedup = Deduplicator(window: dedupWindow)
         self.notifiers = notifiers
         recomputeSummary()
+    }
+
+    var isSuppressed: Bool {
+        doNotDisturb || preferences.isInQuietHours()
     }
 
     var menuBarState: MenuBarState {
@@ -43,16 +50,32 @@ final class EventBus {
 
         persist(message)
         lastEventAt = message.timestamp
+        lastKind = message.kind
         recomputeSummary()
 
-        guard !doNotDisturb else {
-            PerchLog.bus.info("dnd active, suppressing banner for \(message.kind.rawValue, privacy: .public)")
+        guard !isSuppressed else {
+            PerchLog.bus.info("suppressed banner for \(message.kind.rawValue, privacy: .public)")
             return
         }
 
         let content = NotificationContent(from: message)
         for notifier in notifiers {
             notifier.deliver(content)
+        }
+    }
+
+    /// Marks the waiting/finished events the user hadn't seen yet — called when they open the app,
+    /// so the stats can measure how long Perch saved them from waiting.
+    func acknowledgePending(at time: Date = .now) {
+        let descriptor = FetchDescriptor<AgentEvent>(predicate: #Predicate { $0.acknowledgedAt == nil })
+        guard let pending = try? modelContext.fetch(descriptor) else { return }
+        var touched = false
+        for event in pending where event.isNotable {
+            event.acknowledgedAt = time
+            touched = true
+        }
+        if touched {
+            save()
         }
     }
 

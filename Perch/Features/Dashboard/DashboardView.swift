@@ -38,6 +38,7 @@ final class DashboardNavigation {
 
 struct DashboardView: View {
     @Bindable private var navigation = DashboardNavigation.shared
+    @Environment(EventBus.self) private var bus
 
     var body: some View {
         TabView(selection: $navigation.selection) {
@@ -48,6 +49,7 @@ struct DashboardView: View {
             }
         }
         .frame(minWidth: 720, minHeight: 480)
+        .task { bus.acknowledgePending() }
     }
 
     @ViewBuilder
