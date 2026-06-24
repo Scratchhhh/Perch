@@ -17,6 +17,7 @@ struct PerchApp: App {
         Window("Perch", id: WindowOpener.dashboardID) {
             DashboardView()
                 .environment(environment.eventBus)
+                .environment(environment.integrations)
                 .modelContainer(environment.modelContainer)
         }
         .defaultSize(width: 780, height: 540)

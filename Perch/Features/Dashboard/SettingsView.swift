@@ -3,11 +3,14 @@ import PerchCore
 
 struct SettingsView: View {
     @Environment(EventBus.self) private var bus
+    @Environment(IntegrationsModel.self) private var integrations
 
     var body: some View {
         @Bindable var bus = bus
 
         Form {
+            IntegrationsSection()
+
             Section("Notifications") {
                 Toggle("Do Not Disturb", isOn: $bus.doNotDisturb)
                 Text("Pauses every banner without losing the underlying events.")
@@ -39,6 +42,7 @@ struct SettingsView: View {
         }
         .formStyle(.grouped)
         .navigationTitle("Settings")
+        .task { integrations.refresh() }
     }
 
     private var appVersion: String {

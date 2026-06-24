@@ -10,6 +10,7 @@ import PerchCore
 final class AppEnvironment {
     let modelContainer: ModelContainer
     let eventBus: EventBus
+    let integrations: IntegrationsModel
 
     @ObservationIgnored private let localNotifier: LocalNotifier
     @ObservationIgnored private let listener: LocalListener
@@ -21,6 +22,7 @@ final class AppEnvironment {
         let notifier = LocalNotifier()
         self.localNotifier = notifier
         self.eventBus = EventBus(modelContext: container.mainContext, notifiers: [notifier])
+        self.integrations = IntegrationsModel(integrations: [ClaudeCodeHooksIntegration()])
 
         let token = TokenStore.loadOrCreate()
         let bus = self.eventBus
