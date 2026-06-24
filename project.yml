@@ -1,0 +1,110 @@
+name: Perch
+options:
+  bundleIdPrefix: com.perch
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "-"
+    DEVELOPMENT_TEAM: ""
+    ENABLE_HARDENED_RUNTIME: YES
+    CLANG_ENABLE_MODULES: YES
+    GCC_TREAT_WARNINGS_AS_ERRORS: NO
+
+targets:
+  PerchCore:
+    type: framework
+    platform: macOS
+    sources:
+      - path: PerchCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.perch.core
+        PRODUCT_NAME: PerchCore
+        DEFINES_MODULE: YES
+        SKIP_INSTALL: YES
+        CODE_SIGN_IDENTITY: "-"
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        GENERATE_INFOPLIST_FILE: YES
+
+  Perch:
+    type: application
+    platform: macOS
+    sources:
+      - path: Perch
+    settings:
+      base:
+        INFOPLIST_FILE: Perch/App/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.perch.app
+        PRODUCT_NAME: Perch
+        CODE_SIGN_ENTITLEMENTS: Perch/App/Perch.entitlements
+        ENABLE_APP_SANDBOX: NO
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        COMBINE_HIDPI_IMAGES: YES
+        LD_RUNPATH_SEARCH_PATHS:
+          - "$(inherited)"
+          - "@executable_path/../Frameworks"
+    dependencies:
+      - target: PerchCore
+        embed: true
+      - target: perch-helper
+        link: false
+        copy:
+          destination: wrapper
+          subpath: Contents/Helpers
+          phaseOrder: postCompile
+
+  perch-helper:
+    type: tool
+    platform: macOS
+    sources:
+      - path: PerchHelper
+      - path: PerchCore/Wire
+    settings:
+      base:
+        PRODUCT_NAME: perch-helper
+        PRODUCT_BUNDLE_IDENTIFIER: com.perch.helper
+        CODE_SIGN_IDENTITY: "-"
+        ENABLE_HARDENED_RUNTIME: YES
+
+  PerchTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: PerchTests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.perch.tests
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGN_IDENTITY: "-"
+    dependencies:
+      - target: PerchCore
+        embed: false
+
+schemes:
+  Perch:
+    build:
+      targets:
+        Perch: all
+        perch-helper: all
+      parallelizeBuild: true
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - PerchTests
+  perch-helper:
+    build:
+      targets:
+        perch-helper: all

@@ -1,0 +1,871 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		011E341B645DC4A95C2D9871 /* PerchCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8DE0A664CFE07104ABE69 /* PerchCore.framework */; };
+		07F12A4D89A4FA387547DC66 /* perch-helper in Embed Dependencies */ = {isa = PBXBuildFile; fileRef = 70FC2A9AF87B27965EC01020 /* perch-helper */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		0E7BEACA4EFD28F6E42AC7AF /* RelayMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BC139383891B2612725806 /* RelayMessageTests.swift */; };
+		10A005F9407F9A1D5EDB8701 /* PerchCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8DE0A664CFE07104ABE69 /* PerchCore.framework */; };
+		19011216E650F7E6E16BFC6B /* PerchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A273FDF288DDD755E9D97E33 /* PerchApp.swift */; };
+		218337E7F4B75A93A425D015 /* AgentTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC57567D0B7E7C57467A6D4 /* AgentTypes.swift */; };
+		24D9887C4731E0A53AD8EFD3 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9551AC5E7092BBF85512B1C /* HistoryView.swift */; };
+		276BDC421059B6571E2110AA /* MenuBarContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64567D8E615EEE6884EEBBED /* MenuBarContent.swift */; };
+		29938F19AC86830B1F8EA6AF /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F559086596394194615259A /* Logging.swift */; };
+		2D2A1585780BBE452B2EA228 /* EventBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F620C2B5D0B1CC38229396 /* EventBus.swift */; };
+		37CA2277E9FAA7D0195BF493 /* RelayMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900A53EB9BA414A397ED690F /* RelayMessage.swift */; };
+		384DED8BBA8E3C3BBA48F13F /* SessionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56163C77FF2046556C10AEA7 /* SessionsView.swift */; };
+		411FC925E61E74D53C513C9B /* MenuBarLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0AF8E26471FD6BACB29D3B /* MenuBarLabel.swift */; };
+		42B595867CB72EF576B0C5A6 /* WindowOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AC83441E05F1309704EC0 /* WindowOpener.swift */; };
+		43C15A0BC7CC569441DF3A08 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB03FE4D764E1C39A73D677 /* DashboardView.swift */; };
+		4DB0A9B6E79020B6FDF75CC2 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5140D15918D08576ABFA2F61 /* AppEnvironment.swift */; };
+		55ACD0333C17CCB916A282F4 /* HookCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF53F05075EECA689856341 /* HookCommand.swift */; };
+		5639F6195C5B70C637CC96B0 /* DeduplicationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92FEF7B2D4E18BD8607B77 /* DeduplicationTests.swift */; };
+		58CFF579FB996428028784FE /* RelayMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900A53EB9BA414A397ED690F /* RelayMessage.swift */; };
+		59310E246F452F90DED34A90 /* AgentSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B07FBB6CE3B79E6B8E724E /* AgentSession.swift */; };
+		5E6A38D5A1856CC2348E2A86 /* TokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6E894EC2816BB82ACC7FEC /* TokenStore.swift */; };
+		6BE73B792939EFBE8225A66A /* AgentTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC57567D0B7E7C57467A6D4 /* AgentTypes.swift */; };
+		7F33C06946D0C9ED4987C3C9 /* MCPCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E772C4C4CA1157AB85D389F /* MCPCommand.swift */; };
+		8DE75BC810325893575CC95B /* PerchCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8DE0A664CFE07104ABE69 /* PerchCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8EF18B45D01F19DB25201A10 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E748401FC043A8FF64DEAC5D /* SettingsView.swift */; };
+		A70223A012D1088AE282CC20 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5DC4501044BD0B9DAE959C /* main.swift */; };
+		AEDF1EC698D1D6E8C98F9862 /* PerchModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6093D3A5F14D636A46EBC322 /* PerchModelContainer.swift */; };
+		B36FD85A35737EFF6F2D9BB2 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283C8D7570016EC6D6F75B9D /* StatsView.swift */; };
+		B3DF5DD09EC26AE3E8A67EF5 /* NotificationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C7708819743BE47BA9B1B /* NotificationRouter.swift */; };
+		B416003B6C97C3AE2A434E28 /* RelayClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17349F6CCF8D1447793D94F /* RelayClient.swift */; };
+		BBC0560B0C1AA901BC5043E6 /* PerchPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC28471D9A8FA0848D532C1 /* PerchPaths.swift */; };
+		CB5BD6352D728AE54F48AA1F /* AgentEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0182C04E649200E591F5DFD /* AgentEvent.swift */; };
+		D482F49514F2672783288A01 /* PerchPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC28471D9A8FA0848D532C1 /* PerchPaths.swift */; };
+		D85BEBDD7433E898B1BFD886 /* LocalListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C067854A2A226225B52126CA /* LocalListener.swift */; };
+		E20E5EDA17EDCD89D57EE094 /* Notifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81484C31B17AC219FEB7F435 /* Notifier.swift */; };
+		E2498A247C56AD85A65947FE /* LocalNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9BB1667306EA55D979CB62 /* LocalNotifier.swift */; };
+		F384F0EACFD31A5A92DE0A99 /* Deduplicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F55B00DD5D1D44C68E224 /* Deduplicator.swift */; };
+		F63011C49913FAFB705F781D /* SessionStateIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438804D9EC203D39F6E36FD2 /* SessionStateIcon.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		033FED8D7C533AD8D07FB1D6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 78904F42286EE3E52ED2700B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9F26C0AC6A8B5EBEEA98DAAE;
+			remoteInfo = "perch-helper";
+		};
+		5C44097FF19905F8A7774779 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 78904F42286EE3E52ED2700B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF180962BD6D782FEE09F22B;
+			remoteInfo = PerchCore;
+		};
+		D75FE806C953764BE29234DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 78904F42286EE3E52ED2700B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF180962BD6D782FEE09F22B;
+			remoteInfo = PerchCore;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		001CF69FB72A534E4A4290FB /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8DE75BC810325893575CC95B /* PerchCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ECBD77AAE26464931E66CB56 /* Embed Dependencies */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Helpers;
+			dstSubfolderSpec = 1;
+			files = (
+				07F12A4D89A4FA387547DC66 /* perch-helper in Embed Dependencies */,
+			);
+			name = "Embed Dependencies";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		074F55B00DD5D1D44C68E224 /* Deduplicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deduplicator.swift; sourceTree = "<group>"; };
+		10B07FBB6CE3B79E6B8E724E /* AgentSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentSession.swift; sourceTree = "<group>"; };
+		13C8DE0A664CFE07104ABE69 /* PerchCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PerchCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E772C4C4CA1157AB85D389F /* MCPCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCPCommand.swift; sourceTree = "<group>"; };
+		283C8D7570016EC6D6F75B9D /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		438804D9EC203D39F6E36FD2 /* SessionStateIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStateIcon.swift; sourceTree = "<group>"; };
+		5140D15918D08576ABFA2F61 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		56163C77FF2046556C10AEA7 /* SessionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsView.swift; sourceTree = "<group>"; };
+		6093D3A5F14D636A46EBC322 /* PerchModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerchModelContainer.swift; sourceTree = "<group>"; };
+		62526A1AA0A59571FD7628E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		64567D8E615EEE6884EEBBED /* MenuBarContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarContent.swift; sourceTree = "<group>"; };
+		6CC57567D0B7E7C57467A6D4 /* AgentTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentTypes.swift; sourceTree = "<group>"; };
+		70FC2A9AF87B27965EC01020 /* perch-helper */ = {isa = PBXFileReference; includeInIndex = 0; path = "perch-helper"; sourceTree = BUILT_PRODUCTS_DIR; };
+		81484C31B17AC219FEB7F435 /* Notifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifier.swift; sourceTree = "<group>"; };
+		8A9BB1667306EA55D979CB62 /* LocalNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotifier.swift; sourceTree = "<group>"; };
+		8CB03FE4D764E1C39A73D677 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		8F559086596394194615259A /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
+		900A53EB9BA414A397ED690F /* RelayMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayMessage.swift; sourceTree = "<group>"; };
+		9C1C7708819743BE47BA9B1B /* NotificationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRouter.swift; sourceTree = "<group>"; };
+		9F8AC83441E05F1309704EC0 /* WindowOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowOpener.swift; sourceTree = "<group>"; };
+		9F92FEF7B2D4E18BD8607B77 /* DeduplicationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeduplicationTests.swift; sourceTree = "<group>"; };
+		A273FDF288DDD755E9D97E33 /* PerchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerchApp.swift; sourceTree = "<group>"; };
+		AD83E3EAE4561E8A7CC3CF82 /* Perch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Perch.entitlements; sourceTree = "<group>"; };
+		ADC28471D9A8FA0848D532C1 /* PerchPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerchPaths.swift; sourceTree = "<group>"; };
+		AE0AF8E26471FD6BACB29D3B /* MenuBarLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarLabel.swift; sourceTree = "<group>"; };
+		B9551AC5E7092BBF85512B1C /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		B9C11CB6F201B9372EA0827B /* PerchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PerchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C067854A2A226225B52126CA /* LocalListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalListener.swift; sourceTree = "<group>"; };
+		C17349F6CCF8D1447793D94F /* RelayClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayClient.swift; sourceTree = "<group>"; };
+		CD5DC4501044BD0B9DAE959C /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		D0182C04E649200E591F5DFD /* AgentEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentEvent.swift; sourceTree = "<group>"; };
+		D41D4D3B908363F711572982 /* Perch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Perch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5BC139383891B2612725806 /* RelayMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayMessageTests.swift; sourceTree = "<group>"; };
+		DBF53F05075EECA689856341 /* HookCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HookCommand.swift; sourceTree = "<group>"; };
+		E4F620C2B5D0B1CC38229396 /* EventBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBus.swift; sourceTree = "<group>"; };
+		E748401FC043A8FF64DEAC5D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		EB6E894EC2816BB82ACC7FEC /* TokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStore.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		599C95ED543616392CB25279 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				011E341B645DC4A95C2D9871 /* PerchCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B06C00D1E5CEC7F7BEEE9BB5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10A005F9407F9A1D5EDB8701 /* PerchCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		037CFFA6A233895ED02DE52C /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				DCF8F01D7725F3103AD23B4E /* Dashboard */,
+				76E80B9258B6CAD90C7817F7 /* MenuBar */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		1D7AA35871D1B677B79CA179 /* PerchCore */ = {
+			isa = PBXGroup;
+			children = (
+				DFAC629902F4DC5CB742AC49 /* Logic */,
+				692AA70EF31509D46A453302 /* Wire */,
+			);
+			path = PerchCore;
+			sourceTree = "<group>";
+		};
+		51BD4944104C18CD1B3CCC2E /* Notifiers */ = {
+			isa = PBXGroup;
+			children = (
+				8A9BB1667306EA55D979CB62 /* LocalNotifier.swift */,
+				9C1C7708819743BE47BA9B1B /* NotificationRouter.swift */,
+				81484C31B17AC219FEB7F435 /* Notifier.swift */,
+			);
+			path = Notifiers;
+			sourceTree = "<group>";
+		};
+		5604ACE44E439FA92A920531 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				70FC2A9AF87B27965EC01020 /* perch-helper */,
+				D41D4D3B908363F711572982 /* Perch.app */,
+				13C8DE0A664CFE07104ABE69 /* PerchCore.framework */,
+				B9C11CB6F201B9372EA0827B /* PerchTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		692AA70EF31509D46A453302 /* Wire */ = {
+			isa = PBXGroup;
+			children = (
+				6CC57567D0B7E7C57467A6D4 /* AgentTypes.swift */,
+				ADC28471D9A8FA0848D532C1 /* PerchPaths.swift */,
+				900A53EB9BA414A397ED690F /* RelayMessage.swift */,
+			);
+			path = Wire;
+			sourceTree = "<group>";
+		};
+		76E80B9258B6CAD90C7817F7 /* MenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				64567D8E615EEE6884EEBBED /* MenuBarContent.swift */,
+				AE0AF8E26471FD6BACB29D3B /* MenuBarLabel.swift */,
+				438804D9EC203D39F6E36FD2 /* SessionStateIcon.swift */,
+			);
+			path = MenuBar;
+			sourceTree = "<group>";
+		};
+		BA24DEAAE2B20E12C56327B6 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				E4F620C2B5D0B1CC38229396 /* EventBus.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		D59FE4FF96EE68E6DBC4C6AD /* PerchHelper */ = {
+			isa = PBXGroup;
+			children = (
+				DBF53F05075EECA689856341 /* HookCommand.swift */,
+				CD5DC4501044BD0B9DAE959C /* main.swift */,
+				1E772C4C4CA1157AB85D389F /* MCPCommand.swift */,
+				C17349F6CCF8D1447793D94F /* RelayClient.swift */,
+			);
+			path = PerchHelper;
+			sourceTree = "<group>";
+		};
+		DC06E898AFD425038EC5A464 /* Channels */ = {
+			isa = PBXGroup;
+			children = (
+				C067854A2A226225B52126CA /* LocalListener.swift */,
+			);
+			path = Channels;
+			sourceTree = "<group>";
+		};
+		DCF8F01D7725F3103AD23B4E /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				8CB03FE4D764E1C39A73D677 /* DashboardView.swift */,
+				B9551AC5E7092BBF85512B1C /* HistoryView.swift */,
+				56163C77FF2046556C10AEA7 /* SessionsView.swift */,
+				E748401FC043A8FF64DEAC5D /* SettingsView.swift */,
+				283C8D7570016EC6D6F75B9D /* StatsView.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		DEEF9E100A7290E48476D7A0 /* PerchTests */ = {
+			isa = PBXGroup;
+			children = (
+				9F92FEF7B2D4E18BD8607B77 /* DeduplicationTests.swift */,
+				D5BC139383891B2612725806 /* RelayMessageTests.swift */,
+			);
+			path = PerchTests;
+			sourceTree = "<group>";
+		};
+		DFAC629902F4DC5CB742AC49 /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				074F55B00DD5D1D44C68E224 /* Deduplicator.swift */,
+				8F559086596394194615259A /* Logging.swift */,
+			);
+			path = Logic;
+			sourceTree = "<group>";
+		};
+		E2FE76835BB9FBCADB65C38C = {
+			isa = PBXGroup;
+			children = (
+				E32E753CE6364804D2CF49B3 /* Perch */,
+				1D7AA35871D1B677B79CA179 /* PerchCore */,
+				D59FE4FF96EE68E6DBC4C6AD /* PerchHelper */,
+				DEEF9E100A7290E48476D7A0 /* PerchTests */,
+				5604ACE44E439FA92A920531 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E32E753CE6364804D2CF49B3 /* Perch */ = {
+			isa = PBXGroup;
+			children = (
+				EEC16C9E619B957A56177B83 /* App */,
+				DC06E898AFD425038EC5A464 /* Channels */,
+				BA24DEAAE2B20E12C56327B6 /* Core */,
+				037CFFA6A233895ED02DE52C /* Features */,
+				EB0137D87DAA7DC9DA224999 /* Model */,
+				51BD4944104C18CD1B3CCC2E /* Notifiers */,
+			);
+			path = Perch;
+			sourceTree = "<group>";
+		};
+		EB0137D87DAA7DC9DA224999 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D0182C04E649200E591F5DFD /* AgentEvent.swift */,
+				10B07FBB6CE3B79E6B8E724E /* AgentSession.swift */,
+				6093D3A5F14D636A46EBC322 /* PerchModelContainer.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EEC16C9E619B957A56177B83 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				5140D15918D08576ABFA2F61 /* AppEnvironment.swift */,
+				62526A1AA0A59571FD7628E7 /* Info.plist */,
+				AD83E3EAE4561E8A7CC3CF82 /* Perch.entitlements */,
+				A273FDF288DDD755E9D97E33 /* PerchApp.swift */,
+				EB6E894EC2816BB82ACC7FEC /* TokenStore.swift */,
+				9F8AC83441E05F1309704EC0 /* WindowOpener.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		45DC64F4606392864F14C513 /* Perch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4E7BAC100ADA994FCF785195 /* Build configuration list for PBXNativeTarget "Perch" */;
+			buildPhases = (
+				D1A1C77C580B3DEA6A464FB2 /* Sources */,
+				599C95ED543616392CB25279 /* Frameworks */,
+				001CF69FB72A534E4A4290FB /* Embed Frameworks */,
+				ECBD77AAE26464931E66CB56 /* Embed Dependencies */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BCB83B7D18329F45E618B5B1 /* PBXTargetDependency */,
+				D9F33D9447A898E55ED15349 /* PBXTargetDependency */,
+			);
+			name = Perch;
+			packageProductDependencies = (
+			);
+			productName = Perch;
+			productReference = D41D4D3B908363F711572982 /* Perch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		687C8F85AD19D926995FCD41 /* PerchTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC552300FFCE4F7CB53BAB19 /* Build configuration list for PBXNativeTarget "PerchTests" */;
+			buildPhases = (
+				A13B18044C6A90B9BC952565 /* Sources */,
+				B06C00D1E5CEC7F7BEEE9BB5 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				08192ADF7A325B68D2B47D30 /* PBXTargetDependency */,
+			);
+			name = PerchTests;
+			packageProductDependencies = (
+			);
+			productName = PerchTests;
+			productReference = B9C11CB6F201B9372EA0827B /* PerchTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9F26C0AC6A8B5EBEEA98DAAE /* perch-helper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BFB9153E722DEEBCD5D896C3 /* Build configuration list for PBXNativeTarget "perch-helper" */;
+			buildPhases = (
+				CFA1E89CF4392B743927DDB1 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "perch-helper";
+			packageProductDependencies = (
+			);
+			productName = "perch-helper";
+			productReference = 70FC2A9AF87B27965EC01020 /* perch-helper */;
+			productType = "com.apple.product-type.tool";
+		};
+		FF180962BD6D782FEE09F22B /* PerchCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA21553794B76477E76B7715 /* Build configuration list for PBXNativeTarget "PerchCore" */;
+			buildPhases = (
+				0FFC342364C618C5EAFE69E8 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PerchCore;
+			packageProductDependencies = (
+			);
+			productName = PerchCore;
+			productReference = 13C8DE0A664CFE07104ABE69 /* PerchCore.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		78904F42286EE3E52ED2700B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					45DC64F4606392864F14C513 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+					687C8F85AD19D926995FCD41 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+					9F26C0AC6A8B5EBEEA98DAAE = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+					FF180962BD6D782FEE09F22B = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = E6AE955975C9C0B42C636FA3 /* Build configuration list for PBXProject "Perch" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = E2FE76835BB9FBCADB65C38C;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 5604ACE44E439FA92A920531 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				45DC64F4606392864F14C513 /* Perch */,
+				FF180962BD6D782FEE09F22B /* PerchCore */,
+				687C8F85AD19D926995FCD41 /* PerchTests */,
+				9F26C0AC6A8B5EBEEA98DAAE /* perch-helper */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0FFC342364C618C5EAFE69E8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6BE73B792939EFBE8225A66A /* AgentTypes.swift in Sources */,
+				F384F0EACFD31A5A92DE0A99 /* Deduplicator.swift in Sources */,
+				29938F19AC86830B1F8EA6AF /* Logging.swift in Sources */,
+				BBC0560B0C1AA901BC5043E6 /* PerchPaths.swift in Sources */,
+				37CA2277E9FAA7D0195BF493 /* RelayMessage.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A13B18044C6A90B9BC952565 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5639F6195C5B70C637CC96B0 /* DeduplicationTests.swift in Sources */,
+				0E7BEACA4EFD28F6E42AC7AF /* RelayMessageTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CFA1E89CF4392B743927DDB1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				218337E7F4B75A93A425D015 /* AgentTypes.swift in Sources */,
+				55ACD0333C17CCB916A282F4 /* HookCommand.swift in Sources */,
+				7F33C06946D0C9ED4987C3C9 /* MCPCommand.swift in Sources */,
+				D482F49514F2672783288A01 /* PerchPaths.swift in Sources */,
+				B416003B6C97C3AE2A434E28 /* RelayClient.swift in Sources */,
+				58CFF579FB996428028784FE /* RelayMessage.swift in Sources */,
+				A70223A012D1088AE282CC20 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1A1C77C580B3DEA6A464FB2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB5BD6352D728AE54F48AA1F /* AgentEvent.swift in Sources */,
+				59310E246F452F90DED34A90 /* AgentSession.swift in Sources */,
+				4DB0A9B6E79020B6FDF75CC2 /* AppEnvironment.swift in Sources */,
+				43C15A0BC7CC569441DF3A08 /* DashboardView.swift in Sources */,
+				2D2A1585780BBE452B2EA228 /* EventBus.swift in Sources */,
+				24D9887C4731E0A53AD8EFD3 /* HistoryView.swift in Sources */,
+				D85BEBDD7433E898B1BFD886 /* LocalListener.swift in Sources */,
+				E2498A247C56AD85A65947FE /* LocalNotifier.swift in Sources */,
+				276BDC421059B6571E2110AA /* MenuBarContent.swift in Sources */,
+				411FC925E61E74D53C513C9B /* MenuBarLabel.swift in Sources */,
+				B3DF5DD09EC26AE3E8A67EF5 /* NotificationRouter.swift in Sources */,
+				E20E5EDA17EDCD89D57EE094 /* Notifier.swift in Sources */,
+				19011216E650F7E6E16BFC6B /* PerchApp.swift in Sources */,
+				AEDF1EC698D1D6E8C98F9862 /* PerchModelContainer.swift in Sources */,
+				F63011C49913FAFB705F781D /* SessionStateIcon.swift in Sources */,
+				384DED8BBA8E3C3BBA48F13F /* SessionsView.swift in Sources */,
+				8EF18B45D01F19DB25201A10 /* SettingsView.swift in Sources */,
+				B36FD85A35737EFF6F2D9BB2 /* StatsView.swift in Sources */,
+				5E6A38D5A1856CC2348E2A86 /* TokenStore.swift in Sources */,
+				42B595867CB72EF576B0C5A6 /* WindowOpener.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		08192ADF7A325B68D2B47D30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF180962BD6D782FEE09F22B /* PerchCore */;
+			targetProxy = 5C44097FF19905F8A7774779 /* PBXContainerItemProxy */;
+		};
+		BCB83B7D18329F45E618B5B1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF180962BD6D782FEE09F22B /* PerchCore */;
+			targetProxy = D75FE806C953764BE29234DC /* PBXContainerItemProxy */;
+		};
+		D9F33D9447A898E55ED15349 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9F26C0AC6A8B5EBEEA98DAAE /* perch-helper */;
+			targetProxy = 033FED8D7C533AD8D07FB1D6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0F6AD60D2124FA67F1FB6499 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		1FF94462567402D0A0AD2B99 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.perch.helper;
+				PRODUCT_NAME = "perch-helper";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		204E4DAFE4A978BD53C4066A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Perch/App/Perch.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = NO;
+				INFOPLIST_FILE = Perch/App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.perch.app;
+				PRODUCT_NAME = Perch;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		3C5DC887DE33ECDDBA8B3A68 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.perch.core;
+				PRODUCT_NAME = PerchCore;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		67ED794FBCC3FA788B9B4C1B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.perch.helper;
+				PRODUCT_NAME = "perch-helper";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		99C45836D2F1D4E548E783B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		B257EBD80915A4F135D37470 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.perch.core;
+				PRODUCT_NAME = PerchCore;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		D1903F6D554C0A35CF0EE279 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.perch.tests;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D7328AA565AA95B269F8EE6F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.perch.tests;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DD1BC7C1BF042D41AC16AD92 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Perch/App/Perch.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = NO;
+				INFOPLIST_FILE = Perch/App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.perch.app;
+				PRODUCT_NAME = Perch;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4E7BAC100ADA994FCF785195 /* Build configuration list for PBXNativeTarget "Perch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				204E4DAFE4A978BD53C4066A /* Debug */,
+				DD1BC7C1BF042D41AC16AD92 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		BFB9153E722DEEBCD5D896C3 /* Build configuration list for PBXNativeTarget "perch-helper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				67ED794FBCC3FA788B9B4C1B /* Debug */,
+				1FF94462567402D0A0AD2B99 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DC552300FFCE4F7CB53BAB19 /* Build configuration list for PBXNativeTarget "PerchTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7328AA565AA95B269F8EE6F /* Debug */,
+				D1903F6D554C0A35CF0EE279 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E6AE955975C9C0B42C636FA3 /* Build configuration list for PBXProject "Perch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99C45836D2F1D4E548E783B4 /* Debug */,
+				0F6AD60D2124FA67F1FB6499 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		EA21553794B76477E76B7715 /* Build configuration list for PBXNativeTarget "PerchCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B257EBD80915A4F135D37470 /* Debug */,
+				3C5DC887DE33ECDDBA8B3A68 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 78904F42286EE3E52ED2700B /* Project object */;
+}
