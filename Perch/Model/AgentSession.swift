@@ -11,6 +11,7 @@ final class AgentSession {
     var startedAt: Date
     var lastActivityAt: Date
     var stateRaw: String
+    var acknowledgedAt: Date?
 
     @Relationship(deleteRule: .cascade, inverse: \AgentEvent.session)
     var events: [AgentEvent]

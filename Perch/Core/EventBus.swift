@@ -20,6 +20,13 @@ final class EventBus {
     private(set) var lastEventAt: Date?
     private(set) var lastKind: EventKind?
 
+    /// Whether the "needs you" alert is currently active (drives the menu-bar icon and mascot).
+    /// Clears when acknowledged and settles by itself after the TTL.
+    private(set) var hasActiveAttention = false
+    private var lastAttentionAt: Date?
+    private let attentionTTL = AttentionPolicy.defaultTTL
+    @ObservationIgnored private var attentionExpiry: Task<Void, Never>?
+
     init(modelContext: ModelContext, preferences: PreferencesStore, notifiers: [Notifier], dedupWindow: TimeInterval = 5) {
         self.modelContext = modelContext
         self.preferences = preferences
@@ -33,7 +40,7 @@ final class EventBus {
     }
 
     var menuBarState: MenuBarState {
-        if waitingCount > 0 { return .attention }
+        if hasActiveAttention { return .attention }
         if workingCount > 0 { return .thinking }
         return .calm
     }
@@ -53,6 +60,12 @@ final class EventBus {
         lastKind = message.kind
         recomputeSummary()
 
+        if message.kind.demandsAttention {
+            lastAttentionAt = Date()
+            scheduleAttentionExpiry()
+        }
+        refreshAttention()
+
         guard !isSuppressed else {
             PerchLog.bus.info("suppressed banner for \(message.kind.rawValue, privacy: .public)")
             return
@@ -64,25 +77,36 @@ final class EventBus {
         }
     }
 
-    /// Marks the waiting/finished events the user hadn't seen yet — called when they open the app,
-    /// so the stats can measure how long Perch saved them from waiting.
-    func acknowledgePending(at time: Date = .now) {
-        let descriptor = FetchDescriptor<AgentEvent>(predicate: #Predicate { $0.acknowledgedAt == nil })
-        guard let pending = try? modelContext.fetch(descriptor) else { return }
-        var touched = false
-        for event in pending where event.isNotable {
-            event.acknowledgedAt = time
-            touched = true
+    /// Called when the user looks (opens the dashboard or menu, clicks the mascot or a banner):
+    /// clears the active alert, marks waiting sessions as seen, and records the acknowledgement
+    /// time on pending events so the stats can measure saved waiting.
+    func acknowledge(at time: Date = .now) {
+        let unseen = FetchDescriptor<AgentSession>(predicate: #Predicate { $0.acknowledgedAt == nil })
+        if let sessions = try? modelContext.fetch(unseen) {
+            for session in sessions where session.state == .waiting {
+                session.acknowledgedAt = time
+            }
         }
-        if touched {
-            save()
+
+        let pending = FetchDescriptor<AgentEvent>(predicate: #Predicate { $0.acknowledgedAt == nil })
+        if let events = try? modelContext.fetch(pending) {
+            for event in events where event.isNotable {
+                event.acknowledgedAt = time
+            }
         }
+
+        attentionExpiry?.cancel()
+        hasActiveAttention = false
+        save()
     }
 
     private func persist(_ message: RelayMessage) {
         let session = upsertSession(for: message)
         session.lastActivityAt = message.timestamp
         session.state = message.kind.resultingState
+        if message.kind.demandsAttention {
+            session.acknowledgedAt = nil
+        }
 
         let event = AgentEvent(
             ts: message.timestamp,
@@ -131,6 +155,33 @@ final class EventBus {
         let raw = state.rawValue
         let descriptor = FetchDescriptor<AgentSession>(predicate: #Predicate { $0.stateRaw == raw })
         return (try? modelContext.fetchCount(descriptor)) ?? 0
+    }
+
+    private var unseenAttentionCount: Int {
+        let waiting = SessionState.waiting.rawValue
+        let descriptor = FetchDescriptor<AgentSession>(
+            predicate: #Predicate { $0.stateRaw == waiting && $0.acknowledgedAt == nil }
+        )
+        return (try? modelContext.fetchCount(descriptor)) ?? 0
+    }
+
+    private func refreshAttention() {
+        hasActiveAttention = AttentionPolicy.isActive(
+            unseenCount: unseenAttentionCount,
+            lastAttentionAt: lastAttentionAt,
+            now: Date(),
+            ttl: attentionTTL
+        )
+    }
+
+    private func scheduleAttentionExpiry() {
+        attentionExpiry?.cancel()
+        attentionExpiry = Task { @MainActor [weak self] in
+            guard let self else { return }
+            try? await Task.sleep(for: .seconds(self.attentionTTL))
+            guard !Task.isCancelled else { return }
+            self.refreshAttention()
+        }
     }
 
     private func save() {

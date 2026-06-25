@@ -22,6 +22,7 @@ struct SessionsView: View {
                     }
                 }
                 .listStyle(.inset)
+                .animation(.smooth(duration: 0.3), value: sessions.map(\.id))
             }
         }
         .navigationTitle("Sessions")

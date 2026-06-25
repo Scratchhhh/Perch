@@ -42,8 +42,10 @@ struct MenuBarContent: View {
             actions
         }
         .frame(width: 320)
+        .animation(.smooth(duration: 0.28), value: activeSessions.map(\.id))
         .task {
             wireNavigation()
+            bus.acknowledge()
         }
     }
 
@@ -58,10 +60,14 @@ struct MenuBarContent: View {
                 Text("\(bus.waitingCount) waiting")
                     .font(.caption)
                     .foregroundStyle(.orange)
+                    .contentTransition(.numericText())
+                    .transition(.opacity)
             } else if bus.workingCount > 0 {
                 Text("\(bus.workingCount) working")
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                    .contentTransition(.numericText())
+                    .transition(.opacity)
             }
         }
         .padding(.horizontal, 12)
@@ -120,9 +126,11 @@ struct MenuBarContent: View {
             openWindow(id: id)
         }
         NotificationRouter.shared.onOpenDashboard = {
+            bus.acknowledge()
             WindowOpener.shared.focus()
         }
         NotificationRouter.shared.onOpenProject = { path in
+            bus.acknowledge()
             NotificationRouter.shared.revealProject(path)
             NSApplication.shared.activate()
         }

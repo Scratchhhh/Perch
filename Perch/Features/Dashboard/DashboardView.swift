@@ -52,7 +52,7 @@ struct DashboardView: View {
             }
         }
         .frame(minWidth: 720, minHeight: 480)
-        .task { bus.acknowledgePending() }
+        .task { bus.acknowledge() }
     }
 
     @ViewBuilder

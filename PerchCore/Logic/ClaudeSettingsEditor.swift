@@ -3,6 +3,7 @@ import Foundation
 public enum ClaudeHookEvent: String, CaseIterable, Sendable {
     case stop = "Stop"
     case notification = "Notification"
+    case permissionRequest = "PermissionRequest"
     case subagentStop = "SubagentStop"
 }
 

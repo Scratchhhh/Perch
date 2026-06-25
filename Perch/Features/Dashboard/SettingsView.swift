@@ -81,6 +81,8 @@ struct SettingsView: View {
         }
         .formStyle(.grouped)
         .navigationTitle("Settings")
+        .animation(.smooth(duration: 0.25), value: preferences.dndScheduleEnabled)
+        .animation(.smooth(duration: 0.25), value: loginError)
         .task { integrations.refresh() }
         .onAppear { launchAtLogin = LoginItem.isEnabled }
     }

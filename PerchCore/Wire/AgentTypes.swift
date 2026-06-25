@@ -50,6 +50,18 @@ public enum EventKind: String, Codable, Sendable, CaseIterable {
             return false
         }
     }
+
+    /// Maps a Claude Code hook event name to the kind of signal it represents.
+    /// `PermissionRequest` is the event that fires for the "Asking for permission" prompt.
+    public static func fromClaudeHookEvent(_ eventName: String) -> EventKind {
+        switch eventName {
+        case "Stop": return .finished
+        case "SubagentStop": return .subagentDone
+        case "Notification": return .needsInput
+        case "PermissionRequest": return .permission
+        default: return .finished
+        }
+    }
 }
 
 public enum SessionState: String, Codable, Sendable, CaseIterable {

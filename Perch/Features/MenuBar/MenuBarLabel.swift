@@ -28,7 +28,9 @@ struct MenuBarLabel: View {
     var body: some View {
         Image(systemName: state.symbolName)
             .symbolRenderingMode(.hierarchical)
+            .contentTransition(.symbolEffect(.replace))
             .modifier(StateEffect(state: state))
+            .animation(.smooth(duration: 0.3), value: state)
             .accessibilityLabel(state.accessibilityLabel)
     }
 }

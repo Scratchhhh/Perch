@@ -9,8 +9,8 @@ enum MascotState: Equatable {
     case calling
     case dozing
 
-    init(workingCount: Int, waitingCount: Int, lastKind: EventKind?, lastEventAt: Date?, now: Date) {
-        if waitingCount > 0 {
+    init(hasAttention: Bool, workingCount: Int, lastKind: EventKind?, lastEventAt: Date?, now: Date) {
+        if hasAttention {
             self = .calling
         } else if workingCount > 0 {
             self = .sleeping

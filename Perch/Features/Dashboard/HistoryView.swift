@@ -30,6 +30,7 @@ struct HistoryView: View {
                     HistoryRow(event: event)
                 }
                 .listStyle(.inset)
+                .animation(.smooth(duration: 0.3), value: filtered.map(\.id))
                 .searchable(text: $searchText, prompt: "Search history")
             }
         }

@@ -71,6 +71,7 @@ struct StatsView: View {
                 }
             }
             .padding(20)
+            .animation(.smooth(duration: 0.35), value: summary.totalNotable)
         }
         .navigationTitle("Stats")
     }

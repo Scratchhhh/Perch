@@ -26,6 +26,21 @@ final class IntegrationsModel {
         }
     }
 
+    /// On launch, bring any already-connected-but-outdated integration up to date (e.g. an older
+    /// hook set missing PermissionRequest). Only touches integrations that are partially present,
+    /// so tools the user never connected are left alone. Idempotent and backed up.
+    func repairOutdated() {
+        for integration in integrations where integration.refreshStatus() == .partiallyInstalled {
+            do {
+                _ = try integration.install()
+                PerchLog.integration.info("auto-repaired \(integration.id, privacy: .public)")
+            } catch {
+                PerchLog.integration.error("auto-repair failed for \(integration.id, privacy: .public): \(error.localizedDescription, privacy: .public)")
+            }
+        }
+        refresh()
+    }
+
     func install(_ integration: any Integration) {
         run(integration, verb: "Connected") { try integration.install() }
     }

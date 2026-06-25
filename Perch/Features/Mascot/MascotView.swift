@@ -10,8 +10,8 @@ struct MascotView: View {
 
     private var state: MascotState {
         MascotState(
+            hasAttention: bus.hasActiveAttention,
             workingCount: bus.workingCount,
-            waitingCount: bus.waitingCount,
             lastKind: bus.lastKind,
             lastEventAt: bus.lastEventAt,
             now: now
@@ -30,20 +30,29 @@ struct MascotView: View {
                 Image(systemName: state.symbol)
                     .font(.system(size: 38))
                     .foregroundStyle(state.tint)
+                    .contentTransition(.symbolEffect(.replace))
                     .modifier(MascotMotion(state: state))
                 if let caption = state.caption {
                     Text(caption)
                         .font(.caption2.weight(.semibold))
                         .foregroundStyle(state.tint)
+                        .transition(.scale.combined(with: .opacity))
                 }
             }
+            .animation(.smooth(duration: 0.3), value: state)
         }
         .frame(width: 120, height: 120)
         .contentShape(Circle())
         .onReceive(ticker) { now = $0 }
-        .onTapGesture { WindowOpener.shared.focus() }
+        .onTapGesture {
+            bus.acknowledge()
+            WindowOpener.shared.focus()
+        }
         .contextMenu {
-            Button("Open Dashboard") { WindowOpener.shared.focus() }
+            Button("Open Dashboard") {
+                bus.acknowledge()
+                WindowOpener.shared.focus()
+            }
             Button("Hide Mascot") { preferences.mascotEnabled = false }
         }
         .help("Perch — click to open the dashboard")

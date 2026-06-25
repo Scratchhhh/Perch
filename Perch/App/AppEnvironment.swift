@@ -66,6 +66,7 @@ final class AppEnvironment {
         transcriptWatcher.start()
         mascot.setVisible(preferences.mascotEnabled)
         observeMascotPreference()
+        integrations.repairOutdated()
     }
 
     private func observeMascotPreference() {
