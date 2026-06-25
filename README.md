@@ -24,12 +24,6 @@ No more babysitting a long task, only to find it stalled on an *"Allow this comm
 
 Apple Silicon · macOS 14+ · free & open source — or [build from source](#build-it-yourself)
 
-<br>
-
-<!-- 📸 Drop your screenshot here. Recommended: a clean shot of the dashboard or the menu-bar
-     notification, ~1400px wide. Save it as docs/screenshot.png and it shows up below. -->
-<img src="docs/screenshot.png" width="760" alt="Perch dashboard" />
-
 </div>
 
 <br>
