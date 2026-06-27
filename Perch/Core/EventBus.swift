@@ -25,6 +25,12 @@ final class EventBus {
     /// request apart from a block even after a later non-attention event updates `lastKind`.
     private(set) var lastAttentionKind: EventKind?
 
+    /// Sessions that have been working without a new event for longer than expected — a "possibly
+    /// stuck" signal hooks can't provide. Recomputed on a timer; cleared for a session on new activity.
+    private(set) var stuckSessionIds: Set<String> = []
+    @ObservationIgnored private var stuckMonitor: Task<Void, Never>?
+    private let stuckCheckInterval: TimeInterval = 60
+
     /// Whether the "needs you" alert is currently active (drives the menu-bar icon and mascot).
     /// Clears when acknowledged and settles by itself after the TTL.
     private(set) var hasActiveAttention = false
@@ -48,6 +54,7 @@ final class EventBus {
         self.dedup = Deduplicator(window: dedupWindow)
         self.notifiers = notifiers
         recomputeSummary()
+        startStuckMonitor()
     }
 
     var isSuppressed: Bool {
@@ -73,6 +80,7 @@ final class EventBus {
         let session = persist(message)
         lastEventAt = message.timestamp
         lastKind = message.kind
+        stuckSessionIds.remove(message.sessionId) // fresh activity → not stuck
         recomputeSummary()
 
         if message.kind.demandsAttention {
@@ -176,6 +184,35 @@ final class EventBus {
     func snooze(_ session: AgentSession, until date: Date?) {
         session.snoozedUntil = date
         save()
+    }
+
+    private func startStuckMonitor() {
+        stuckMonitor?.cancel()
+        stuckMonitor = Task { @MainActor [weak self] in
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(self?.stuckCheckInterval ?? 60))
+                guard let self, !Task.isCancelled else { return }
+                self.refreshStuckSessions()
+            }
+        }
+    }
+
+    /// Flags working sessions that have gone quiet longer than their usual turn allows (see
+    /// `StuckPolicy`). Cheap: only working sessions, and their event history is already in the store.
+    func refreshStuckSessions(now: Date = .now) {
+        let working = SessionState.working.rawValue
+        let descriptor = FetchDescriptor<AgentSession>(predicate: #Predicate { $0.stateRaw == working })
+        guard let sessions = try? modelContext.fetch(descriptor) else { return }
+
+        var stuck: Set<String> = []
+        for session in sessions {
+            let stats = TurnEstimator.turnStats(eventTimes: session.events.map(\.ts))
+            let threshold = StuckPolicy.threshold(turnStats: stats)
+            if StuckPolicy.isStuck(workingSince: session.lastActivityAt, now: now, threshold: threshold) {
+                stuck.insert(session.id)
+            }
+        }
+        stuckSessionIds = stuck
     }
 
     @discardableResult

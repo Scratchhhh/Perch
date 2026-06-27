@@ -98,6 +98,11 @@ final class LocalNotifier: NSObject, Notifier {
             title: "Open Project",
             options: [.foreground]
         )
+        let openTerminal = UNNotificationAction(
+            identifier: NotificationRouter.openTerminalAction,
+            title: "Open in Terminal",
+            options: [.foreground]
+        )
         let markDone = UNNotificationAction(
             identifier: NotificationRouter.markDoneAction,
             title: "Got It",
@@ -106,12 +111,12 @@ final class LocalNotifier: NSObject, Notifier {
 
         let done = UNNotificationCategory(
             identifier: CategoryID.done,
-            actions: [open, markDone],
+            actions: [openTerminal, open, markDone],
             intentIdentifiers: []
         )
         let attention = UNNotificationCategory(
             identifier: CategoryID.attention,
-            actions: [open],
+            actions: [openTerminal, open],
             intentIdentifiers: []
         )
         let info = UNNotificationCategory(

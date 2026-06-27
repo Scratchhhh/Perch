@@ -35,7 +35,10 @@ private struct SessionRow: View {
     let bus: EventBus
 
     @State private var now = Date()
+    @State private var turnStats: TurnStats?
     private let ticker = Timer.publish(every: 30, on: .main, in: .common).autoconnect()
+
+    private var isStuck: Bool { bus.stuckSessionIds.contains(session.id) }
 
     var body: some View {
         HStack(spacing: 12) {
@@ -56,6 +59,17 @@ private struct SessionRow: View {
                 }
                 .font(.caption)
                 .foregroundStyle(.secondary)
+
+                if session.state == .working, let median = turnStats?.median {
+                    Label("usually ~\(Self.durationText(median))", systemImage: "clock.arrow.circlepath")
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                }
+                if isStuck {
+                    Label("Possibly stuck — no update in a while", systemImage: "questionmark.diamond.fill")
+                        .font(.caption2.weight(.medium))
+                        .foregroundStyle(.orange)
+                }
                 if session.isSnoozed(at: now), let until = session.snoozedUntil {
                     Label("Snoozed until \(until, format: .dateTime.hour().minute())", systemImage: "bell.slash.fill")
                         .font(.caption2)
@@ -78,6 +92,14 @@ private struct SessionRow: View {
 
             if let path = session.projectPath, !path.isEmpty {
                 Button {
+                    NotificationRouter.shared.focusProject(path)
+                } label: {
+                    Image(systemName: "terminal")
+                }
+                .buttonStyle(.borderless)
+                .help("Open project in Terminal so you can reply")
+
+                Button {
                     NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
                 } label: {
                     Image(systemName: "arrow.up.forward.app")
@@ -88,6 +110,9 @@ private struct SessionRow: View {
         }
         .padding(.vertical, 4)
         .onReceive(ticker) { now = $0 }
+        .task(id: session.events.count) {
+            turnStats = TurnEstimator.turnStats(eventTimes: session.events.map(\.ts))
+        }
     }
 
     private var snoozeMenu: some View {
@@ -115,5 +140,14 @@ private struct SessionRow: View {
         case .done: return .green
         case .idle: return .secondary
         }
+    }
+
+    private static func durationText(_ seconds: TimeInterval) -> String {
+        let minutes = Int((seconds / 60).rounded())
+        if minutes < 1 { return "\(Int(seconds.rounded()))s" }
+        if minutes < 60 { return "\(minutes) min" }
+        let hours = minutes / 60
+        let remainder = minutes % 60
+        return remainder == 0 ? "\(hours)h" : "\(hours)h \(remainder)m"
     }
 }
