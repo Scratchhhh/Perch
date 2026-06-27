@@ -43,6 +43,7 @@
 		58CFF579FB996428028784FE /* RelayMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900A53EB9BA414A397ED690F /* RelayMessage.swift */; };
 		59310E246F452F90DED34A90 /* AgentSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B07FBB6CE3B79E6B8E724E /* AgentSession.swift */; };
 		598FEF03BF1CBDF3DB03ACC4 /* PreferencesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD71EE5EF61E650075FB8C41 /* PreferencesStore.swift */; };
+		5AEA7D8D1431FDD8DAFDB6CA /* MascotMoodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C644250CB305CE7D73CF8 /* MascotMoodTests.swift */; };
 		5E6A38D5A1856CC2348E2A86 /* TokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6E894EC2816BB82ACC7FEC /* TokenStore.swift */; };
 		6249A3D4FEE582BB62BABC1B /* QuietHoursTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2966CC925C7A53311573EBFF /* QuietHoursTests.swift */; };
 		6BE73B792939EFBE8225A66A /* AgentTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC57567D0B7E7C57467A6D4 /* AgentTypes.swift */; };
@@ -70,6 +71,7 @@
 		BBB02CF9FEDB44B06F8D75ED /* CodexIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04B9EF7F1C2FBAD18EBF346 /* CodexIntegration.swift */; };
 		BBC0560B0C1AA901BC5043E6 /* PerchPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC28471D9A8FA0848D532C1 /* PerchPaths.swift */; };
 		BCD30C7B2676DE512DB2CAD6 /* MascotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE236592CA647CA35418E1DF /* MascotController.swift */; };
+		C0FCB64EAD512CC44065A267 /* MascotMood.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3B53740D5EFFD9DF15EB47 /* MascotMood.swift */; };
 		CB5BD6352D728AE54F48AA1F /* AgentEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0182C04E649200E591F5DFD /* AgentEvent.swift */; };
 		D16A2FEBA4D149054CE93C50 /* TranscriptParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80312417C86EB7764947B13 /* TranscriptParser.swift */; };
 		D1BFC2ADAE2D9B4228AD7FEF /* TranscriptTailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED5B1B70AADB23DD6CD62D2 /* TranscriptTailTests.swift */; };
@@ -143,6 +145,7 @@
 		10B07FBB6CE3B79E6B8E724E /* AgentSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentSession.swift; sourceTree = "<group>"; };
 		12947AA31335376B9CD5918F /* ConfigWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigWriter.swift; sourceTree = "<group>"; };
 		13C8DE0A664CFE07104ABE69 /* PerchCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PerchCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1B7C644250CB305CE7D73CF8 /* MascotMoodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MascotMoodTests.swift; sourceTree = "<group>"; };
 		1C2B09E76F78BAC2547CBD52 /* LogExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogExporter.swift; sourceTree = "<group>"; };
 		1E772C4C4CA1157AB85D389F /* MCPCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCPCommand.swift; sourceTree = "<group>"; };
 		283C8D7570016EC6D6F75B9D /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
@@ -200,6 +203,7 @@
 		C8B71B89279143FF54675FC7 /* IntegrationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationsModel.swift; sourceTree = "<group>"; };
 		CD5DC4501044BD0B9DAE959C /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		CEAFEC00C1F15FFB07EB1CD5 /* MCPServerRegistrar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCPServerRegistrar.swift; sourceTree = "<group>"; };
+		CF3B53740D5EFFD9DF15EB47 /* MascotMood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MascotMood.swift; sourceTree = "<group>"; };
 		D0182C04E649200E591F5DFD /* AgentEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentEvent.swift; sourceTree = "<group>"; };
 		D22BD899047759B3C9D90FF8 /* MCPHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCPHandlerTests.swift; sourceTree = "<group>"; };
 		D41D4D3B908363F711572982 /* Perch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Perch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -397,6 +401,7 @@
 				2AC447A918A9D06B60ED28B9 /* AttentionPolicyTests.swift */,
 				81B38517DCB65FAB3AF15289 /* ConfigRoundTripTests.swift */,
 				9F92FEF7B2D4E18BD8607B77 /* DeduplicationTests.swift */,
+				1B7C644250CB305CE7D73CF8 /* MascotMoodTests.swift */,
 				D22BD899047759B3C9D90FF8 /* MCPHandlerTests.swift */,
 				A990A833D032E454437DFB32 /* MCPRegistrarTests.swift */,
 				2966CC925C7A53311573EBFF /* QuietHoursTests.swift */,
@@ -418,6 +423,7 @@
 				074F55B00DD5D1D44C68E224 /* Deduplicator.swift */,
 				8A085B460A778280DCAE1EFA /* IncrementalLineBuffer.swift */,
 				8F559086596394194615259A /* Logging.swift */,
+				CF3B53740D5EFFD9DF15EB47 /* MascotMood.swift */,
 				CEAFEC00C1F15FFB07EB1CD5 /* MCPServerRegistrar.swift */,
 				B33B3A7534986BC3C09CFDBB /* QuietHours.swift */,
 				688788E072E16744CD10F01C /* StatsCalculator.swift */,
@@ -630,6 +636,7 @@
 				29938F19AC86830B1F8EA6AF /* Logging.swift in Sources */,
 				E24DF549EFAC5E8ED5CFEC0B /* MCPHandler.swift in Sources */,
 				03D9884FA2A1D2E42BF16EC8 /* MCPServerRegistrar.swift in Sources */,
+				C0FCB64EAD512CC44065A267 /* MascotMood.swift in Sources */,
 				BBC0560B0C1AA901BC5043E6 /* PerchPaths.swift in Sources */,
 				A05EE3F034F3AB40FF709EDF /* QuietHours.swift in Sources */,
 				37CA2277E9FAA7D0195BF493 /* RelayMessage.swift in Sources */,
@@ -648,6 +655,7 @@
 				5639F6195C5B70C637CC96B0 /* DeduplicationTests.swift in Sources */,
 				931BABD2BBA59E35558114F1 /* MCPHandlerTests.swift in Sources */,
 				3467B5C6C36310F01EA56A0D /* MCPRegistrarTests.swift in Sources */,
+				5AEA7D8D1431FDD8DAFDB6CA /* MascotMoodTests.swift in Sources */,
 				6249A3D4FEE582BB62BABC1B /* QuietHoursTests.swift in Sources */,
 				0E7BEACA4EFD28F6E42AC7AF /* RelayMessageTests.swift in Sources */,
 				E0F1BC1FB81D3351458C2F46 /* SettingsMergeTests.swift in Sources */,

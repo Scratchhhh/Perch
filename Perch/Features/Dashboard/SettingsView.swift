@@ -29,6 +29,14 @@ struct SettingsView: View {
 
             Section("Mascot") {
                 Toggle("Show the perch bird", isOn: $preferences.mascotEnabled)
+                if preferences.mascotEnabled {
+                    Picker("Size", selection: mascotSizeBinding) {
+                        ForEach(MascotSize.allCases) { size in
+                            Text(size.label).tag(size)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
                 Text("A small, draggable companion that reacts to your agents. Drag it anywhere; click to open the dashboard.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -91,6 +99,13 @@ struct SettingsView: View {
         .animation(.smooth(duration: 0.25), value: loginError)
         .task { integrations.refresh() }
         .onAppear { launchAtLogin = LoginItem.isEnabled }
+    }
+
+    private var mascotSizeBinding: Binding<MascotSize> {
+        Binding(
+            get: { MascotSize.closest(to: preferences.mascotScale) },
+            set: { preferences.mascotScale = $0.scale }
+        )
     }
 
     private var launchBinding: Binding<Bool> {

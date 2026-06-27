@@ -1,50 +1,70 @@
 import SwiftUI
 import PerchCore
 
-/// What the bird is doing, derived from the live session counts. "happy" is a short flash after a
-/// finish before settling back to dozing.
-enum MascotState: Equatable {
-    case sleeping
-    case happy
-    case calling
-    case dozing
+/// The three offered mascot sizes. Stored as a raw `Double` scale in preferences so the value is
+/// future-proof, but presented as discrete S/M/L choices.
+enum MascotSize: String, CaseIterable, Identifiable {
+    case small
+    case medium
+    case large
 
-    init(hasAttention: Bool, workingCount: Int, lastKind: EventKind?, lastEventAt: Date?, now: Date) {
-        if hasAttention {
-            self = .calling
-        } else if workingCount > 0 {
-            self = .sleeping
-        } else if lastKind == .finished, let lastEventAt, now.timeIntervalSince(lastEventAt) < 6 {
-            self = .happy
-        } else {
-            self = .dozing
+    var id: String { rawValue }
+
+    var scale: Double {
+        switch self {
+        case .small: return 0.75
+        case .medium: return 1.0
+        case .large: return 1.5
         }
     }
 
+    var label: String {
+        switch self {
+        case .small: return "S"
+        case .medium: return "M"
+        case .large: return "L"
+        }
+    }
+
+    static func closest(to scale: Double) -> MascotSize {
+        allCases.min { abs($0.scale - scale) < abs($1.scale - scale) } ?? .medium
+    }
+}
+
+/// App-side presentation for the pure `MascotMood` (defined and tested in PerchCore). Each mood
+/// gets a distinct SF Symbol, tint and caption so the different event types are visually telling
+/// apart at a glance — no custom assets required.
+extension MascotMood {
     var symbol: String {
         switch self {
-        case .sleeping: return "bird.fill"
+        case .idle: return "bird"
+        case .working: return "bird.fill"
         case .happy: return "bird.fill"
-        case .calling: return "bird.fill"
-        case .dozing: return "bird"
+        case .asking: return "questionmark.circle.fill"
+        case .permission: return "hand.raised.fill"
+        case .alert: return "exclamationmark.triangle.fill"
         }
     }
 
     var tint: Color {
         switch self {
-        case .sleeping: return .indigo
+        case .idle: return .gray
+        case .working: return .blue
         case .happy: return .green
-        case .calling: return .orange
-        case .dozing: return .gray
+        case .asking: return .orange
+        case .permission: return .orange
+        case .alert: return .red
         }
     }
 
     var caption: String? {
         switch self {
-        case .sleeping: return "Zzz"
+        case .idle: return "Zzz"
+        case .working: return "…"
         case .happy: return "Done!"
-        case .calling: return "Hey!"
-        case .dozing: return nil
+        case .asking: return "?"
+        case .permission: return "Allow?"
+        case .alert: return "Blocked"
         }
     }
 }

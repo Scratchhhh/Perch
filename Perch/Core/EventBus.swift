@@ -19,6 +19,9 @@ final class EventBus {
     private(set) var waitingCount = 0
     private(set) var lastEventAt: Date?
     private(set) var lastKind: EventKind?
+    /// The kind of the most recent attention-demanding event, so the mascot can tell a permission
+    /// request apart from a block even after a later non-attention event updates `lastKind`.
+    private(set) var lastAttentionKind: EventKind?
 
     /// Whether the "needs you" alert is currently active (drives the menu-bar icon and mascot).
     /// Clears when acknowledged and settles by itself after the TTL.
@@ -62,6 +65,7 @@ final class EventBus {
 
         if message.kind.demandsAttention {
             lastAttentionAt = Date()
+            lastAttentionKind = message.kind
             scheduleAttentionExpiry()
         }
         refreshAttention()
