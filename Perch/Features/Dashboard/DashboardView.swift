@@ -52,7 +52,9 @@ struct DashboardView: View {
             }
         }
         .frame(minWidth: 720, minHeight: 480)
-        .task { bus.acknowledge() }
+        // Yield first so the window paints before we touch the store; acknowledging a backlog
+        // shouldn't make opening the dashboard feel like it hangs.
+        .task { await Task.yield(); bus.acknowledge() }
     }
 
     @ViewBuilder

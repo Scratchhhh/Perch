@@ -2,7 +2,7 @@ import Foundation
 import OSLog
 import PerchCore
 
-struct LogLine: Identifiable {
+struct LogLine: Identifiable, Sendable {
     let id = UUID()
     let date: Date
     let category: String

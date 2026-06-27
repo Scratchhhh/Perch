@@ -3,38 +3,77 @@ import SwiftData
 import PerchCore
 
 struct HistoryView: View {
-    @Query(sort: \AgentEvent.ts, order: .reverse)
-    private var events: [AgentEvent]
+    static let pageSize = 200
 
     @State private var searchText = ""
+    @State private var limit = HistoryView.pageSize
 
-    private var filtered: [AgentEvent] {
-        guard !searchText.isEmpty else { return events }
-        return events.filter { event in
-            event.message.localizedCaseInsensitiveContains(searchText)
-                || (event.session?.label.localizedCaseInsensitiveContains(searchText) ?? false)
-                || event.source.displayName.localizedCaseInsensitiveContains(searchText)
+    var body: some View {
+        HistoryList(searchText: searchText, limit: limit) {
+            limit += Self.pageSize
         }
+        .searchable(text: $searchText, prompt: "Search history")
+        .onChange(of: searchText) { _, _ in limit = Self.pageSize }
+        .navigationTitle("History")
+    }
+}
+
+/// The fetch lives in a child whose `@Query` is rebuilt from the search text and page limit. This
+/// keeps the database doing the filtering and paging (predicate + `fetchLimit`) instead of loading
+/// every event into memory and scanning it on each render. The `session` relationship is
+/// prefetched so rendering rows doesn't trigger a fault (and an extra query) per visible row.
+private struct HistoryList: View {
+    @Query private var events: [AgentEvent]
+    private let searchText: String
+    private let limit: Int
+    private let onLoadMore: () -> Void
+
+    init(searchText: String, limit: Int, onLoadMore: @escaping () -> Void) {
+        self.searchText = searchText
+        self.limit = limit
+        self.onLoadMore = onLoadMore
+
+        var descriptor = FetchDescriptor<AgentEvent>(
+            predicate: #Predicate { event in
+                searchText.isEmpty
+                    || event.message.localizedStandardContains(searchText)
+                    || (event.session?.label.localizedStandardContains(searchText) ?? false)
+            },
+            sortBy: [SortDescriptor(\.ts, order: .reverse)]
+        )
+        descriptor.fetchLimit = limit
+        descriptor.relationshipKeyPathsForPrefetching = [\.session]
+        _events = Query(descriptor)
     }
 
     var body: some View {
-        Group {
-            if events.isEmpty {
+        if events.isEmpty {
+            if searchText.isEmpty {
                 ContentUnavailableView(
                     "Nothing logged yet",
                     systemImage: "clock",
                     description: Text("Past events from your agents will appear here.")
                 )
             } else {
-                List(filtered) { event in
+                ContentUnavailableView.search(text: searchText)
+            }
+        } else {
+            List {
+                ForEach(events) { event in
                     HistoryRow(event: event)
                 }
-                .listStyle(.inset)
-                .animation(.smooth(duration: 0.3), value: filtered.map(\.id))
-                .searchable(text: $searchText, prompt: "Search history")
+                if events.count >= limit {
+                    Button(action: onLoadMore) {
+                        Text("Load more")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.borderless)
+                    .padding(.vertical, 4)
+                }
             }
+            .listStyle(.inset)
+            .animation(.smooth(duration: 0.3), value: events.count)
         }
-        .navigationTitle("History")
     }
 }
 

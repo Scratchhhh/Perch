@@ -18,7 +18,7 @@ struct LogsView: View {
                     .textFieldStyle(.roundedBorder)
                     .frame(maxWidth: 240)
                 Spacer()
-                Button { reload() } label: { Label("Refresh", systemImage: "arrow.clockwise") }
+                Button { Task { await reload() } } label: { Label("Refresh", systemImage: "arrow.clockwise") }
                 Button { copy() } label: { Label("Copy", systemImage: "doc.on.doc") }
                     .disabled(lines.isEmpty)
                 Button { export() } label: { Label("Export…", systemImage: "square.and.arrow.up") }
@@ -51,11 +51,16 @@ struct LogsView: View {
             }
         }
         .navigationTitle("Logs")
-        .task { reload() }
+        .task { await reload() }
     }
 
-    private func reload() {
-        lines = LogExporter.recentEntries()
+    /// Reading the unified log store is synchronous and can stall; do it off the main thread and
+    /// only hop back to assign the result.
+    private func reload() async {
+        let entries = await Task.detached(priority: .userInitiated) {
+            LogExporter.recentEntries()
+        }.value
+        lines = entries
     }
 
     private func copy() {

@@ -81,16 +81,27 @@ final class EventBus {
     /// clears the active alert, marks waiting sessions as seen, and records the acknowledgement
     /// time on pending events so the stats can measure saved waiting.
     func acknowledge(at time: Date = .now) {
-        let unseen = FetchDescriptor<AgentSession>(predicate: #Predicate { $0.acknowledgedAt == nil })
-        if let sessions = try? modelContext.fetch(unseen) {
-            for session in sessions where session.state == .waiting {
+        let waiting = SessionState.waiting.rawValue
+        let unseenSessions = FetchDescriptor<AgentSession>(
+            predicate: #Predicate { $0.acknowledgedAt == nil && $0.stateRaw == waiting }
+        )
+        if let sessions = try? modelContext.fetch(unseenSessions) {
+            for session in sessions {
                 session.acknowledgedAt = time
             }
         }
 
-        let pending = FetchDescriptor<AgentEvent>(predicate: #Predicate { $0.acknowledgedAt == nil })
+        // Only notable kinds (finishes + attention) carry an acknowledgement; skip started /
+        // subagentDone so a large history of book-keeping events isn't scanned on every open.
+        let started = EventKind.started.rawValue
+        let subagentDone = EventKind.subagentDone.rawValue
+        let pending = FetchDescriptor<AgentEvent>(
+            predicate: #Predicate { event in
+                event.acknowledgedAt == nil && event.kindRaw != started && event.kindRaw != subagentDone
+            }
+        )
         if let events = try? modelContext.fetch(pending) {
-            for event in events where event.isNotable {
+            for event in events {
                 event.acknowledgedAt = time
             }
         }
@@ -191,4 +202,52 @@ final class EventBus {
             PerchLog.bus.error("save failed: \(error.localizedDescription, privacy: .public)")
         }
     }
+
+    #if DEBUG
+    /// Fills the store with synthetic sessions/events to stress-test the dashboard tabs. Debug-only;
+    /// surfaced behind the Settings → Developer section and never shipped to users.
+    func seedDemoEvents(count: Int = 1200) {
+        let kinds: [EventKind] = [.finished, .needsInput, .permission, .blocked, .started, .subagentDone]
+        let now = Date()
+        let sessionCount = 12
+        var sessions: [AgentSession] = []
+        for index in 0..<sessionCount {
+            let session = AgentSession(
+                id: "demo-\(index)-\(UUID().uuidString.prefix(6))",
+                source: .claudeCode,
+                projectPath: "/Users/demo/project-\(index)",
+                label: "Demo project \(index)",
+                startedAt: now.addingTimeInterval(-Double(index) * 3600)
+            )
+            modelContext.insert(session)
+            sessions.append(session)
+        }
+        for index in 0..<count {
+            let kind = kinds[index % kinds.count]
+            let ts = now.addingTimeInterval(-Double(index) * 900) // one every 15 min → ~12.5 days back
+            let event = AgentEvent(
+                ts: ts,
+                source: .claudeCode,
+                channel: .test,
+                kind: kind,
+                message: "Demo \(kind.rawValue) event #\(index)"
+            )
+            event.session = sessions[index % sessionCount]
+            if kind.demandsAttention {
+                // Acknowledge most attention events after a varied gap so focus-saved has data.
+                event.acknowledgedAt = ts.addingTimeInterval(Double((index % 40) + 1) * 60)
+            }
+            modelContext.insert(event)
+        }
+        save()
+        recomputeSummary()
+    }
+
+    func deleteAllData() {
+        try? modelContext.delete(model: AgentEvent.self)
+        try? modelContext.delete(model: AgentSession.self)
+        save()
+        recomputeSummary()
+    }
+    #endif
 }

@@ -76,6 +76,12 @@ struct SettingsView: View {
                 Button("Send test \"needs you\" event") {
                     bus.ingest(Self.sample(kind: .permission))
                 }
+                Button("Seed 1,200 demo events") {
+                    bus.seedDemoEvents()
+                }
+                Button("Delete all data", role: .destructive) {
+                    bus.deleteAllData()
+                }
             }
             #endif
         }

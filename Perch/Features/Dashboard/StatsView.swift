@@ -6,24 +6,27 @@ import PerchCore
 struct StatsView: View {
     @Query(sort: \AgentEvent.ts) private var events: [AgentEvent]
 
-    private var summary: StatsSummary {
-        let stats = events.map {
-            EventStat(timestamp: $0.ts, acknowledgedAt: $0.acknowledgedAt, isNotable: $0.isNotable)
-        }
-        return StatsCalculator.summarize(stats, now: Date())
-    }
+    /// Computed off the render path (see `recompute`) so switching to this tab with thousands of
+    /// events in the store doesn't run the whole aggregation inside `body`.
+    @State private var summary = StatsSummary(
+        focusSavedMinutes: 0, contextSwitchesAvoided: 0, streakDays: 0, totalNotable: 0, perDay: []
+    )
 
     var body: some View {
-        let summary = summary
-
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 12)], spacing: 12) {
                     StatCard(
-                        title: "Waiting saved",
-                        value: formatted(minutes: summary.savedMinutes),
-                        systemImage: "clock.badge.checkmark",
+                        title: "Focus saved",
+                        value: formatted(minutes: summary.focusSavedMinutes),
+                        systemImage: "brain.head.profile",
                         tint: .green
+                    )
+                    StatCard(
+                        title: "Context switches avoided",
+                        value: "\(summary.contextSwitchesAvoided)",
+                        systemImage: "arrow.triangle.2.circlepath",
+                        tint: .teal
                     )
                     StatCard(
                         title: "Day streak",
@@ -64,8 +67,12 @@ struct StatsView: View {
                 .padding(14)
                 .background(.quaternary.opacity(0.3), in: RoundedRectangle(cornerRadius: 12))
 
+                Text("Focus saved is the union of the time agents spent actually waiting on you — overlapping waits across parallel agents count once, not several times.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+
                 if events.isEmpty {
-                    Text("Once your agents start reporting in, your saved-waiting time and streak show up here.")
+                    Text("Once your agents start reporting in, your saved focus time and streak show up here.")
                         .font(.callout)
                         .foregroundStyle(.secondary)
                 }
@@ -74,6 +81,25 @@ struct StatsView: View {
             .animation(.smooth(duration: 0.35), value: summary.totalNotable)
         }
         .navigationTitle("Stats")
+        .task(id: events.count) { await recompute() }
+    }
+
+    /// Maps the stored events on the main actor (cheap property reads) then hands the `Sendable`
+    /// snapshot to a background task for the heavy aggregation, assigning the result back on main.
+    private func recompute() async {
+        let stats = events.map {
+            EventStat(
+                timestamp: $0.ts,
+                acknowledgedAt: $0.acknowledgedAt,
+                isNotable: $0.isNotable,
+                demandsAttention: $0.kind.demandsAttention
+            )
+        }
+        let now = Date()
+        let computed = await Task.detached(priority: .userInitiated) {
+            StatsCalculator.summarize(stats, now: now)
+        }.value
+        summary = computed
     }
 
     private func formatted(minutes: Int) -> String {
