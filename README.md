@@ -1,8 +1,18 @@
-<img src="docs/perch-icon.png" width="96" alt="Perch icon" />
+<div align="center">
+
+<img src="docs/perch-icon.png" width="128" alt="Perch icon" />
 
 # Perch
 
-macOS menu-bar app that watches local AI coding agents and notifies you when one needs you.
+**macOS menu-bar app that watches local AI coding agents and notifies you when one finishes or needs input.**
+
+[![platform](https://img.shields.io/badge/platform-macOS%2014%2B-black?logo=apple&logoColor=white)](#install)
+[![Swift](https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white)](#build)
+[![binary](https://img.shields.io/badge/binary-universal-success)](#build)
+[![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![dependencies](https://img.shields.io/badge/dependencies-none-success)](#build)
+
+</div>
 
 ## What it does
 
