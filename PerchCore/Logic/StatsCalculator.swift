@@ -5,8 +5,8 @@ public struct EventStat: Sendable, Equatable {
     public let acknowledgedAt: Date?
     /// Worth showing in history/streak/histogram (a finish or an attention prompt).
     public let isNotable: Bool
-    /// Actually demanded the user's attention (needs-input / permission / blocked). Only these
-    /// count toward focus saved — a `.finished` event never kept anyone waiting at the keyboard.
+    /// Actually demanded attention (needs-input / permission / blocked). Only these count toward
+    /// focus saved; a finish never kept anyone waiting at the keyboard.
     public let demandsAttention: Bool
 
     public init(timestamp: Date, acknowledgedAt: Date?, isNotable: Bool, demandsAttention: Bool) {
@@ -29,10 +29,9 @@ public struct DayCount: Sendable, Equatable, Identifiable {
 }
 
 public struct StatsSummary: Sendable, Equatable {
-    /// Minutes of focus Perch protected, measured as the union of "waiting on you" intervals.
+    /// Minutes of focus protected, measured as the union of "waiting on you" intervals.
     public let focusSavedMinutes: Int
-    /// How many attention prompts the user closed through Perch (acknowledged), i.e. context
-    /// switches that didn't require babysitting the terminal.
+    /// Attention prompts the user closed through Perch (acknowledged).
     public let contextSwitchesAvoided: Int
     public let streakDays: Int
     public let totalNotable: Int
@@ -55,15 +54,12 @@ public struct StatsSummary: Sendable, Equatable {
 
 /// Turns the stored event log into the dashboard numbers.
 ///
-/// "Focus saved" is the honest version of the old "waiting saved": instead of summing every
-/// event's gap (which double-counted parallel agents and counted finishes that never required
-/// attention), it takes the **union of the intervals during which an agent was actually waiting
-/// on you**. Two agents waiting through the same lunch break count that lunch once, not twice.
+/// Focus saved is the union of the intervals during which an agent was actually waiting on you, so
+/// two agents waiting through the same lunch break count that lunch once rather than twice.
 public enum StatsCalculator {
-    /// A single waiting interval can't credit more than this. Past ~30 min you've clearly walked
-    /// away on your own terms — Perch isn't "saving" you from staring at a prompt, you've already
-    /// context-switched. The old 2h cap is what let a few overnight gaps balloon the headline
-    /// number into hundreds of hours.
+    /// A single waiting interval can credit at most this. Past half an hour you've walked away on
+    /// your own, so Perch isn't really saving you from staring at a prompt. The old 2h cap is what
+    /// let a few overnight gaps balloon the headline number.
     public static let focusIntervalCapSeconds: TimeInterval = 30 * 60
 
     public static func summarize(
@@ -104,9 +100,8 @@ public enum StatsCalculator {
         )
     }
 
-    /// Builds capped `[start, end]` waiting intervals from acknowledged attention events, merges
-    /// any that overlap or touch, and returns the total length of the merged set. Merging is what
-    /// stops parallel agents from triple-counting the same wall-clock minutes.
+    /// Caps each acknowledged waiting interval, merges any that overlap or touch, and returns the
+    /// total length. Merging is what stops parallel agents from counting the same minutes twice.
     static func unionDurationSeconds(of events: [EventStat], cap: TimeInterval) -> TimeInterval {
         var intervals: [(start: Date, end: Date)] = []
         for event in events {
@@ -122,7 +117,6 @@ public enum StatsCalculator {
         var current = intervals[0]
         for interval in intervals.dropFirst() {
             if interval.start <= current.end {
-                // Overlapping or touching — extend the running interval instead of adding it.
                 current.end = max(current.end, interval.end)
             } else {
                 total += current.end.timeIntervalSince(current.start)

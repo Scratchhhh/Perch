@@ -1,8 +1,8 @@
 import Foundation
 
-/// Per-project notification delivery rule. `bannerEnabled` is the master switch — turning it off
-/// silences the project entirely (no banner, no sound). With banners on, `soundEnabled` and
-/// `volume` tune the audio. Persisted as JSON in preferences, keyed by absolute project path.
+/// Per-project notification delivery rule. `bannerEnabled` is the master switch: off silences the
+/// project entirely. With banners on, `soundEnabled` and `volume` tune the audio. Persisted as JSON
+/// in preferences, keyed by absolute project path.
 public struct ProjectRule: Codable, Sendable, Equatable {
     public var bannerEnabled: Bool
     public var soundEnabled: Bool

@@ -22,8 +22,6 @@ final class StatsCalculatorTests: XCTestCase {
         EventStat(timestamp: start, acknowledgedAt: ack, isNotable: true, demandsAttention: false)
     }
 
-    // MARK: - Focus saved (union of attention intervals)
-
     func testFocusSavedSumsNonOverlappingAttentionIntervals() {
         let base = date(2026, 6, 25, 9, 0)
         let events = [
@@ -104,8 +102,6 @@ final class StatsCalculatorTests: XCTestCase {
         let summary = StatsCalculator.summarize(events, now: date(2026, 6, 25, 18, 0), calendar: calendar)
         XCTAssertEqual(summary.contextSwitchesAvoided, 1)
     }
-
-    // MARK: - Streak / histogram (notable, including finishes)
 
     func testStreakCountsConsecutiveDaysEndingToday() {
         let now = date(2026, 6, 25, 20, 0)

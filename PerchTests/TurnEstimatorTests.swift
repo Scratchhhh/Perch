@@ -29,7 +29,7 @@ final class TurnEstimatorTests: XCTestCase {
     }
 
     func testTurnStatsNeedsEnoughSamples() {
-        // Only 2 gaps from 3 events — below the default minimum of 3.
+        // Only 2 gaps from 3 events, below the default minimum of 3.
         XCTAssertNil(TurnEstimator.turnStats(eventTimes: times([0, 60, 120])))
     }
 

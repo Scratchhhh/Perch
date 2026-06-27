@@ -66,7 +66,7 @@ private struct SessionRow: View {
                         .foregroundStyle(.tertiary)
                 }
                 if isStuck {
-                    Label("Possibly stuck — no update in a while", systemImage: "questionmark.diamond.fill")
+                    Label("Possibly stuck, no update in a while", systemImage: "questionmark.diamond.fill")
                         .font(.caption2.weight(.medium))
                         .foregroundStyle(.orange)
                 }
@@ -130,7 +130,7 @@ private struct SessionRow: View {
         .menuStyle(.borderlessButton)
         .menuIndicator(.hidden)
         .fixedSize()
-        .help(session.isSnoozed(at: now) ? "Snoozed — tap to resume" : "Snooze this session")
+        .help(session.isSnoozed(at: now) ? "Snoozed, tap to resume" : "Snooze this session")
     }
 
     private func color(for state: SessionState) -> Color {

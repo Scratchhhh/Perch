@@ -55,9 +55,9 @@ struct SettingsView: View {
             }
 
             Section("Channels") {
-                LabeledContent("MCP — perch_notify", value: "Active")
-                LabeledContent("Hooks — Claude Code", value: "Active")
-                LabeledContent("File watch — transcripts", value: "Active")
+                LabeledContent("MCP: perch_notify", value: "Active")
+                LabeledContent("Hooks: Claude Code", value: "Active")
+                LabeledContent("File watch: transcripts", value: "Active")
             }
 
             Section("Coming soon") {

@@ -70,7 +70,7 @@ struct MascotView: View {
             }
             Button("Hide Mascot") { preferences.mascotEnabled = false }
         }
-        .help("Perch — click to open the dashboard")
+        .help("Click to open the dashboard")
     }
 
     private var sizeBinding: Binding<MascotSize> {

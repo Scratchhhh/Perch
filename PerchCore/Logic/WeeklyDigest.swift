@@ -43,8 +43,8 @@ public struct WeeklyDigest: Sendable, Equatable {
     }
 }
 
-/// Builds the local "your week with Perch" summary entirely from stored events — no network, no
-/// stored aggregate, so it always reflects the current data.
+/// Builds the local weekly summary from stored events. No network and no stored aggregate, so it
+/// always reflects the current data.
 public enum WeeklyDigestCalculator {
     public static func summarize(
         _ events: [DigestEvent],

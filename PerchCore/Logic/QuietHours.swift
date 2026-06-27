@@ -1,7 +1,7 @@
 import Foundation
 
 /// Quiet-hours math for the scheduled Do Not Disturb. Works in minutes-of-day so it is trivial to
-/// test, and handles overnight ranges (e.g. 22:00–08:00).
+/// test, and handles overnight ranges (e.g. 22:00 to 08:00).
 public enum QuietHours {
     public static func minuteOfDay(_ date: Date, calendar: Calendar = .current) -> Int {
         let components = calendar.dateComponents([.hour, .minute], from: date)

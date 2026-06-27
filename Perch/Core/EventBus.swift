@@ -17,7 +17,7 @@ final class EventBus {
 
     private(set) var workingCount = 0
     private(set) var waitingCount = 0
-    /// Number of waiting sessions the user hasn't seen yet — drives the menu-bar badge.
+    /// Number of waiting sessions the user hasn't seen yet. Drives the menu-bar badge.
     private(set) var attentionBadgeCount = 0
     private(set) var lastEventAt: Date?
     private(set) var lastKind: EventKind?
@@ -25,8 +25,8 @@ final class EventBus {
     /// request apart from a block even after a later non-attention event updates `lastKind`.
     private(set) var lastAttentionKind: EventKind?
 
-    /// Sessions that have been working without a new event for longer than expected — a "possibly
-    /// stuck" signal hooks can't provide. Recomputed on a timer; cleared for a session on new activity.
+    /// Sessions working without a new event for longer than expected: a "possibly stuck" signal
+    /// hooks can't provide. Recomputed on a timer, cleared for a session on new activity.
     private(set) var stuckSessionIds: Set<String> = []
     @ObservationIgnored private var stuckMonitor: Task<Void, Never>?
     private let stuckCheckInterval: TimeInterval = 60

@@ -60,11 +60,11 @@ struct NotificationContent: Sendable {
 
         switch message.kind {
         case .finished:
-            title = "\(projectName) — done"
+            title = "\(projectName): done"
             body = trimmed.isEmpty ? "The agent finished its task." : trimmed
             category = .done
         case .needsInput, .permission, .blocked:
-            title = "\(projectName) — needs you"
+            title = "\(projectName): needs you"
             body = trimmed.isEmpty ? "The agent is waiting for your input." : trimmed
             category = .attention
         case .started, .subagentDone:

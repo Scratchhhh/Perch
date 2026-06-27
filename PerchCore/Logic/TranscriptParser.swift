@@ -15,8 +15,8 @@ public struct TranscriptSignal: Sendable, Equatable {
 }
 
 /// Reads one transcript line and decides whether it represents the agent stopping its turn (the
-/// passive "looks finished / waiting" signal). Everything else — tool calls, user messages,
-/// sidechain/subagent traffic — is ignored so the file watcher stays quiet while work is ongoing.
+/// passive "looks finished / waiting" signal). Everything else (tool calls, user messages,
+/// sidechain/subagent traffic) is ignored so the file watcher stays quiet while work is ongoing.
 public enum TranscriptParser {
     public static func signal(forLine data: Data) -> TranscriptSignal? {
         guard let object = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any] else {

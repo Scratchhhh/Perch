@@ -32,8 +32,8 @@ enum MascotSize: String, CaseIterable, Identifiable {
 }
 
 /// App-side presentation for the pure `MascotMood` (defined and tested in PerchCore). Each mood
-/// gets a distinct SF Symbol, tint and caption so the different event types are visually telling
-/// apart at a glance — no custom assets required.
+/// gets a distinct SF Symbol, tint and caption so the event types are easy to tell apart. No custom
+/// assets required.
 extension MascotMood {
     var symbol: String {
         switch self {

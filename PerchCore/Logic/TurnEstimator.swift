@@ -4,9 +4,9 @@ import Foundation
 public struct TurnStats: Sendable, Equatable {
     /// Number of inter-event gaps the stats are based on.
     public let sampleCount: Int
-    /// Median gap — the "usually about this long" figure shown for active sessions.
+    /// Median gap, shown as the "usually about this long" figure for active sessions.
     public let median: TimeInterval
-    /// 95th-percentile gap — used as a "this is unusually long" stuck threshold.
+    /// 95th-percentile gap, used as the stuck threshold.
     public let p95: TimeInterval
 
     public init(sampleCount: Int, median: TimeInterval, p95: TimeInterval) {

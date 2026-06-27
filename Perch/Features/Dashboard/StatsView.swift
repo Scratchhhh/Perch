@@ -78,7 +78,7 @@ struct StatsView: View {
 
                 weeklyDigestSection
 
-                Text("Focus saved is the union of the time agents spent actually waiting on you — overlapping waits across parallel agents count once, not several times.")
+                Text("Focus saved is the union of time agents spent waiting on you. Overlapping waits across parallel agents count once, not several times.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
 

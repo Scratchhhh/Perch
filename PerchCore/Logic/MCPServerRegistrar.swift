@@ -22,8 +22,7 @@ public struct MCPServerSpec: Sendable, Equatable {
 }
 
 /// Adds or removes a single named server inside a JSON config that uses an `mcpServers` object
-/// (Claude Code's `~/.claude.json`, Cursor's `mcp.json`). Every other key — and every other
-/// server — is preserved.
+/// (Claude Code's `~/.claude.json`, Cursor's `mcp.json`). Every other key and server is preserved.
 public enum MCPServerRegistrar {
     public static func register(into data: Data?, name: String, spec: MCPServerSpec, key: String = "mcpServers") throws -> Data {
         var root = try object(from: data)

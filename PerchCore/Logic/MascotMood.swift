@@ -1,25 +1,25 @@
 import Foundation
 
-/// What the mascot is expressing right now. Kept UI-free (no SwiftUI) so the kind→mood mapping is
-/// pure and testable; the app layer maps each mood to a symbol, tint, caption and motion.
+/// What the mascot is expressing. Kept UI-free so the kind-to-mood mapping is testable; the app
+/// layer maps each mood to a symbol, tint, caption and motion.
 public enum MascotMood: String, Sendable, Equatable, CaseIterable {
-    /// Nothing happening — the bird dozes (Zzz).
+    /// Nothing happening. The bird dozes (Zzz).
     case idle
     /// At least one agent is actively working.
     case working
-    /// An agent just finished — a short celebratory flash.
+    /// An agent just finished. A short celebratory flash.
     case happy
-    /// An agent is asking for input (a `Notification`/needsInput prompt).
+    /// An agent is asking for input.
     case asking
-    /// An agent is requesting permission to do something.
+    /// An agent is requesting permission.
     case permission
-    /// An agent is blocked / errored and needs a decision.
+    /// An agent is blocked or errored and needs a decision.
     case alert
 }
 
-/// Decides the mascot mood from the live session signals. Attention wins over everything, then
-/// active work, then a brief post-finish celebration, then idle. The previous logic put the bird
-/// to *sleep* while agents were working — this is the corrected mapping.
+/// Derives the mascot mood from the live session signals. Attention wins, then active work, then a
+/// brief post-finish celebration, then idle. The old logic put the bird to sleep while agents were
+/// working; this is the corrected mapping.
 public enum MascotMoodPolicy {
     public static let happyWindow: TimeInterval = 6
 

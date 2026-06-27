@@ -1,11 +1,9 @@
 import Foundation
 
 /// Seam for future remote notifiers (Telegram, ntfy). They are `Notifier`s like any other, so the
-/// event bus needs no changes to gain them — only a concrete transport and a settings panel.
+/// event bus needs no changes to gain them, only a concrete transport and a settings panel.
 ///
-/// Deliberately unimplemented in v1: Perch ships local-only with zero network egress beyond
-/// localhost. These types exist to keep the architectural shape honest, not to hint at hidden
-/// behaviour.
+/// Unimplemented in v1. Perch is local-only; these types exist to keep the shape in place.
 @MainActor
 protocol RemoteNotifier: Notifier {
     var isConfigured: Bool { get }
