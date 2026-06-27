@@ -12,6 +12,8 @@ final class AgentSession {
     var lastActivityAt: Date
     var stateRaw: String
     var acknowledgedAt: Date?
+    /// When set and in the future, banners for this session are suppressed (snooze).
+    var snoozedUntil: Date?
 
     @Relationship(deleteRule: .cascade, inverse: \AgentEvent.session)
     var events: [AgentEvent]
@@ -41,6 +43,11 @@ final class AgentSession {
     var state: SessionState {
         get { SessionState(rawValue: stateRaw) ?? .idle }
         set { stateRaw = newValue.rawValue }
+    }
+
+    func isSnoozed(at date: Date = .now) -> Bool {
+        guard let snoozedUntil else { return false }
+        return snoozedUntil > date
     }
 
     static func deriveLabel(from message: RelayMessage) -> String {

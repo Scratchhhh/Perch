@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 import PerchCore
 
 struct SettingsView: View {
@@ -26,6 +27,8 @@ struct SettingsView: View {
                     DatePicker("Until", selection: timeBinding(\.dndEndMinute), displayedComponents: .hourAndMinute)
                 }
             }
+
+            ProjectRulesSection()
 
             Section("Mascot") {
                 Toggle("Show the perch bird", isOn: $preferences.mascotEnabled)
@@ -163,4 +166,65 @@ struct SettingsView: View {
         )
     }
     #endif
+}
+
+/// Lists every project Perch has seen and lets the user override banner/sound delivery per project.
+/// Only appears once at least one project-scoped session exists.
+private struct ProjectRulesSection: View {
+    @Environment(PreferencesStore.self) private var preferences
+    @Query(sort: \AgentSession.lastActivityAt, order: .reverse) private var sessions: [AgentSession]
+
+    private var projects: [(path: String, name: String)] {
+        var seen = Set<String>()
+        var result: [(String, String)] = []
+        for session in sessions {
+            guard let path = session.projectPath, !path.isEmpty, seen.insert(path).inserted else { continue }
+            result.append((path, session.label))
+        }
+        return result
+    }
+
+    var body: some View {
+        if !projects.isEmpty {
+            Section("Per-project rules") {
+                ForEach(projects, id: \.path) { project in
+                    let binding = ruleBinding(for: project.path)
+                    DisclosureGroup {
+                        Toggle("Show banners", isOn: binding.bannerEnabled)
+                        Toggle("Play sound", isOn: binding.soundEnabled)
+                            .disabled(!binding.wrappedValue.bannerEnabled)
+                        HStack {
+                            Text("Volume")
+                            Slider(value: binding.volume, in: 0...1)
+                        }
+                        .disabled(!binding.wrappedValue.bannerEnabled || !binding.wrappedValue.soundEnabled)
+                    } label: {
+                        HStack {
+                            Text(project.name)
+                            Spacer()
+                            Text(summary(binding.wrappedValue))
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+                Text("Turning banners off mutes a project entirely; with banners on you can still silence or quieten its sound.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+    }
+
+    private func summary(_ rule: ProjectRule) -> String {
+        if !rule.bannerEnabled { return "Muted" }
+        if !rule.soundEnabled { return "Silent" }
+        return "On · \(Int(rule.volume * 100))%"
+    }
+
+    private func ruleBinding(for path: String) -> Binding<ProjectRule> {
+        Binding(
+            get: { preferences.rule(for: path) },
+            set: { preferences.projectRules[path] = $0 }
+        )
+    }
 }

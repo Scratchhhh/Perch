@@ -16,7 +16,9 @@ enum SoundPlayer {
         }
     }
 
-    static func play(_ cue: Cue) {
-        NSSound(named: cue.soundName)?.play()
+    static func play(_ cue: Cue, volume: Float = 1.0) {
+        guard let sound = NSSound(named: cue.soundName) else { return }
+        sound.volume = max(0, min(1, volume))
+        sound.play()
     }
 }

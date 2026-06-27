@@ -21,6 +21,7 @@
 		218337E7F4B75A93A425D015 /* AgentTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC57567D0B7E7C57467A6D4 /* AgentTypes.swift */; };
 		21917B9164A2DC53AEF28C65 /* ConfigBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E28EE52D3052312441B0F70 /* ConfigBackup.swift */; };
 		24D9887C4731E0A53AD8EFD3 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9551AC5E7092BBF85512B1C /* HistoryView.swift */; };
+		2646E0EA9E4917CB1F00E6E7 /* NotificationCoalescerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE6FC13037D287DF4C21FBA /* NotificationCoalescerTests.swift */; };
 		276BDC421059B6571E2110AA /* MenuBarContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64567D8E615EEE6884EEBBED /* MenuBarContent.swift */; };
 		29938F19AC86830B1F8EA6AF /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F559086596394194615259A /* Logging.swift */; };
 		2D2A1585780BBE452B2EA228 /* EventBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F620C2B5D0B1CC38229396 /* EventBus.swift */; };
@@ -31,6 +32,7 @@
 		37CA2277E9FAA7D0195BF493 /* RelayMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900A53EB9BA414A397ED690F /* RelayMessage.swift */; };
 		384DED8BBA8E3C3BBA48F13F /* SessionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56163C77FF2046556C10AEA7 /* SessionsView.swift */; };
 		3E84A3CCE2D02BAC5CC9DF40 /* StatsCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688788E072E16744CD10F01C /* StatsCalculator.swift */; };
+		3FDA9BF89349D2667F0B0EDF /* ProjectRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68E9E5124D8777610378DC8 /* ProjectRuleTests.swift */; };
 		3FE31C04F80ED076B8033444 /* PerchMCPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747D02706D9E73EE26053D7C /* PerchMCPServer.swift */; };
 		411FC925E61E74D53C513C9B /* MenuBarLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0AF8E26471FD6BACB29D3B /* MenuBarLabel.swift */; };
 		42B595867CB72EF576B0C5A6 /* WindowOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AC83441E05F1309704EC0 /* WindowOpener.swift */; };
@@ -58,6 +60,7 @@
 		8F1AEB3A55971DC1B09B22EA /* ConfigWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12947AA31335376B9CD5918F /* ConfigWriter.swift */; };
 		8FFF76A47A8B7F80EC9D1BA0 /* IncrementalLineBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A085B460A778280DCAE1EFA /* IncrementalLineBuffer.swift */; };
 		931BABD2BBA59E35558114F1 /* MCPHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22BD899047759B3C9D90FF8 /* MCPHandlerTests.swift */; };
+		9500DBB6D4D1C5F34F987EA4 /* NotificationCoalescer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502FACCA84D06E6EE6388C80 /* NotificationCoalescer.swift */; };
 		961168FEBD21493ACBC70F75 /* Integration.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3CF7CD0E9CCF36C323A419 /* Integration.swift */; };
 		A05EE3F034F3AB40FF709EDF /* QuietHours.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B3A7534986BC3C09CFDBB /* QuietHours.swift */; };
 		A70223A012D1088AE282CC20 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5DC4501044BD0B9DAE959C /* main.swift */; };
@@ -85,6 +88,7 @@
 		E24DF549EFAC5E8ED5CFEC0B /* MCPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5030C4F0075DF261C3F93A38 /* MCPHandler.swift */; };
 		E492826E46F042812B2DF006 /* HelperLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4466B7F4E048653E81114A13 /* HelperLocator.swift */; };
 		EC1FFDFF278B08C28238A9C0 /* AttentionPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC447A918A9D06B60ED28B9 /* AttentionPolicyTests.swift */; };
+		EEA51FB727CDA7EC669542D5 /* ProjectRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA736F4B70BEE92E484280E6 /* ProjectRule.swift */; };
 		F384F0EACFD31A5A92DE0A99 /* Deduplicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F55B00DD5D1D44C68E224 /* Deduplicator.swift */; };
 		F63011C49913FAFB705F781D /* SessionStateIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438804D9EC203D39F6E36FD2 /* SessionStateIcon.swift */; };
 /* End PBXBuildFile section */
@@ -157,6 +161,7 @@
 		438804D9EC203D39F6E36FD2 /* SessionStateIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStateIcon.swift; sourceTree = "<group>"; };
 		4466B7F4E048653E81114A13 /* HelperLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperLocator.swift; sourceTree = "<group>"; };
 		4E28EE52D3052312441B0F70 /* ConfigBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigBackup.swift; sourceTree = "<group>"; };
+		502FACCA84D06E6EE6388C80 /* NotificationCoalescer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCoalescer.swift; sourceTree = "<group>"; };
 		5030C4F0075DF261C3F93A38 /* MCPHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCPHandler.swift; sourceTree = "<group>"; };
 		5140D15918D08576ABFA2F61 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		56163C77FF2046556C10AEA7 /* SessionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsView.swift; sourceTree = "<group>"; };
@@ -178,13 +183,16 @@
 		8F559086596394194615259A /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		900A53EB9BA414A397ED690F /* RelayMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayMessage.swift; sourceTree = "<group>"; };
 		9AA7E4DD6C89512ED6473900 /* IntegrationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationsView.swift; sourceTree = "<group>"; };
+		9BE6FC13037D287DF4C21FBA /* NotificationCoalescerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCoalescerTests.swift; sourceTree = "<group>"; };
 		9C1C7708819743BE47BA9B1B /* NotificationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRouter.swift; sourceTree = "<group>"; };
 		9F8AC83441E05F1309704EC0 /* WindowOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowOpener.swift; sourceTree = "<group>"; };
 		9F92FEF7B2D4E18BD8607B77 /* DeduplicationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeduplicationTests.swift; sourceTree = "<group>"; };
 		A273FDF288DDD755E9D97E33 /* PerchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerchApp.swift; sourceTree = "<group>"; };
 		A397D0210551E1719DDE1241 /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
 		A3DA26EE0969BDD9B25621BF /* ClaudeCodeIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeCodeIntegration.swift; sourceTree = "<group>"; };
+		A68E9E5124D8777610378DC8 /* ProjectRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectRuleTests.swift; sourceTree = "<group>"; };
 		A990A833D032E454437DFB32 /* MCPRegistrarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCPRegistrarTests.swift; sourceTree = "<group>"; };
+		AA736F4B70BEE92E484280E6 /* ProjectRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectRule.swift; sourceTree = "<group>"; };
 		AC3CF7CD0E9CCF36C323A419 /* Integration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Integration.swift; sourceTree = "<group>"; };
 		AD83E3EAE4561E8A7CC3CF82 /* Perch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Perch.entitlements; sourceTree = "<group>"; };
 		ADC28471D9A8FA0848D532C1 /* PerchPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerchPaths.swift; sourceTree = "<group>"; };
@@ -404,6 +412,8 @@
 				1B7C644250CB305CE7D73CF8 /* MascotMoodTests.swift */,
 				D22BD899047759B3C9D90FF8 /* MCPHandlerTests.swift */,
 				A990A833D032E454437DFB32 /* MCPRegistrarTests.swift */,
+				9BE6FC13037D287DF4C21FBA /* NotificationCoalescerTests.swift */,
+				A68E9E5124D8777610378DC8 /* ProjectRuleTests.swift */,
 				2966CC925C7A53311573EBFF /* QuietHoursTests.swift */,
 				D5BC139383891B2612725806 /* RelayMessageTests.swift */,
 				79170668408D2577582CA555 /* SettingsMergeTests.swift */,
@@ -425,6 +435,8 @@
 				8F559086596394194615259A /* Logging.swift */,
 				CF3B53740D5EFFD9DF15EB47 /* MascotMood.swift */,
 				CEAFEC00C1F15FFB07EB1CD5 /* MCPServerRegistrar.swift */,
+				502FACCA84D06E6EE6388C80 /* NotificationCoalescer.swift */,
+				AA736F4B70BEE92E484280E6 /* ProjectRule.swift */,
 				B33B3A7534986BC3C09CFDBB /* QuietHours.swift */,
 				688788E072E16744CD10F01C /* StatsCalculator.swift */,
 				0F8995DC97C79EA317944EE9 /* TomlMCPEditor.swift */,
@@ -637,7 +649,9 @@
 				E24DF549EFAC5E8ED5CFEC0B /* MCPHandler.swift in Sources */,
 				03D9884FA2A1D2E42BF16EC8 /* MCPServerRegistrar.swift in Sources */,
 				C0FCB64EAD512CC44065A267 /* MascotMood.swift in Sources */,
+				9500DBB6D4D1C5F34F987EA4 /* NotificationCoalescer.swift in Sources */,
 				BBC0560B0C1AA901BC5043E6 /* PerchPaths.swift in Sources */,
+				EEA51FB727CDA7EC669542D5 /* ProjectRule.swift in Sources */,
 				A05EE3F034F3AB40FF709EDF /* QuietHours.swift in Sources */,
 				37CA2277E9FAA7D0195BF493 /* RelayMessage.swift in Sources */,
 				3E84A3CCE2D02BAC5CC9DF40 /* StatsCalculator.swift in Sources */,
@@ -656,6 +670,8 @@
 				931BABD2BBA59E35558114F1 /* MCPHandlerTests.swift in Sources */,
 				3467B5C6C36310F01EA56A0D /* MCPRegistrarTests.swift in Sources */,
 				5AEA7D8D1431FDD8DAFDB6CA /* MascotMoodTests.swift in Sources */,
+				2646E0EA9E4917CB1F00E6E7 /* NotificationCoalescerTests.swift in Sources */,
+				3FDA9BF89349D2667F0B0EDF /* ProjectRuleTests.swift in Sources */,
 				6249A3D4FEE582BB62BABC1B /* QuietHoursTests.swift in Sources */,
 				0E7BEACA4EFD28F6E42AC7AF /* RelayMessageTests.swift in Sources */,
 				E0F1BC1FB81D3351458C2F46 /* SettingsMergeTests.swift in Sources */,

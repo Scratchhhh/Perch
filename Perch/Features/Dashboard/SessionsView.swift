@@ -4,6 +4,7 @@ import AppKit
 import PerchCore
 
 struct SessionsView: View {
+    @Environment(EventBus.self) private var bus
     @Query(sort: \AgentSession.lastActivityAt, order: .reverse)
     private var sessions: [AgentSession]
 
@@ -18,7 +19,7 @@ struct SessionsView: View {
             } else {
                 List {
                     ForEach(sessions) { session in
-                        SessionRow(session: session)
+                        SessionRow(session: session, bus: bus)
                     }
                 }
                 .listStyle(.inset)
@@ -31,6 +32,10 @@ struct SessionsView: View {
 
 private struct SessionRow: View {
     let session: AgentSession
+    let bus: EventBus
+
+    @State private var now = Date()
+    private let ticker = Timer.publish(every: 30, on: .main, in: .common).autoconnect()
 
     var body: some View {
         HStack(spacing: 12) {
@@ -51,6 +56,11 @@ private struct SessionRow: View {
                 }
                 .font(.caption)
                 .foregroundStyle(.secondary)
+                if session.isSnoozed(at: now), let until = session.snoozedUntil {
+                    Label("Snoozed until \(until, format: .dateTime.hour().minute())", systemImage: "bell.slash.fill")
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                }
             }
 
             Spacer()
@@ -64,6 +74,8 @@ private struct SessionRow: View {
                     .foregroundStyle(.secondary)
             }
 
+            snoozeMenu
+
             if let path = session.projectPath, !path.isEmpty {
                 Button {
                     NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
@@ -75,6 +87,25 @@ private struct SessionRow: View {
             }
         }
         .padding(.vertical, 4)
+        .onReceive(ticker) { now = $0 }
+    }
+
+    private var snoozeMenu: some View {
+        Menu {
+            if session.isSnoozed(at: now) {
+                Button("Resume notifications") { bus.snooze(session, until: nil) }
+            } else {
+                Button("Snooze 15 minutes") { bus.snooze(session, until: Date().addingTimeInterval(15 * 60)) }
+                Button("Snooze 1 hour") { bus.snooze(session, until: Date().addingTimeInterval(60 * 60)) }
+            }
+        } label: {
+            Image(systemName: session.isSnoozed(at: now) ? "bell.slash.fill" : "bell")
+                .foregroundStyle(session.isSnoozed(at: now) ? .orange : .secondary)
+        }
+        .menuStyle(.borderlessButton)
+        .menuIndicator(.hidden)
+        .fixedSize()
+        .help(session.isSnoozed(at: now) ? "Snoozed — tap to resume" : "Snooze this session")
     }
 
     private func color(for state: SessionState) -> Color {

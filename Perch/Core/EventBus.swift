@@ -17,6 +17,8 @@ final class EventBus {
 
     private(set) var workingCount = 0
     private(set) var waitingCount = 0
+    /// Number of waiting sessions the user hasn't seen yet — drives the menu-bar badge.
+    private(set) var attentionBadgeCount = 0
     private(set) var lastEventAt: Date?
     private(set) var lastKind: EventKind?
     /// The kind of the most recent attention-demanding event, so the mascot can tell a permission
@@ -29,6 +31,16 @@ final class EventBus {
     private var lastAttentionAt: Date?
     private let attentionTTL = AttentionPolicy.defaultTTL
     @ObservationIgnored private var attentionExpiry: Task<Void, Never>?
+
+    /// Short coalescing buffer: notifications landing within `coalesceWindow` of the first collapse
+    /// into a single summary banner instead of a flurry of separate ones.
+    private struct BufferedNotification {
+        let content: NotificationContent
+        let notice: PendingNotice
+    }
+    private var notificationBuffer: [BufferedNotification] = []
+    @ObservationIgnored private var coalesceTask: Task<Void, Never>?
+    private let coalesceWindow = NotificationCoalescer.window
 
     init(modelContext: ModelContext, preferences: PreferencesStore, notifiers: [Notifier], dedupWindow: TimeInterval = 5) {
         self.modelContext = modelContext
@@ -58,7 +70,7 @@ final class EventBus {
             return
         }
 
-        persist(message)
+        let session = persist(message)
         lastEventAt = message.timestamp
         lastKind = message.kind
         recomputeSummary()
@@ -74,8 +86,52 @@ final class EventBus {
             PerchLog.bus.info("suppressed banner for \(message.kind.rawValue, privacy: .public)")
             return
         }
+        guard !session.isSnoozed() else {
+            PerchLog.bus.info("session snoozed, banner suppressed for \(message.kind.rawValue, privacy: .public)")
+            return
+        }
 
-        let content = NotificationContent(from: message)
+        let rule = preferences.rule(for: message.project)
+        guard rule.bannerEnabled else {
+            PerchLog.bus.info("project rule mutes \(message.kind.rawValue, privacy: .public)")
+            return
+        }
+
+        var content = NotificationContent(from: message)
+        content.playSound = rule.soundEnabled
+        content.soundVolume = Float(rule.volume)
+        let notice = PendingNotice(sessionId: message.sessionId, kind: message.kind, projectName: session.label)
+        enqueueNotification(content, notice: notice)
+    }
+
+    /// Buffers a notification and (re)arms the coalescing timer. The window is anchored to the first
+    /// notice in the batch so a steady stream still flushes promptly rather than being deferred.
+    private func enqueueNotification(_ content: NotificationContent, notice: PendingNotice) {
+        notificationBuffer.append(BufferedNotification(content: content, notice: notice))
+        guard coalesceTask == nil else { return }
+        coalesceTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            try? await Task.sleep(for: .seconds(self.coalesceWindow))
+            guard !Task.isCancelled else { return }
+            self.flushNotifications()
+        }
+    }
+
+    private func flushNotifications() {
+        coalesceTask = nil
+        let batch = notificationBuffer
+        notificationBuffer.removeAll()
+        guard !batch.isEmpty else { return }
+
+        let content: NotificationContent
+        if batch.count == 1 {
+            content = batch[0].content
+        } else if let summary = NotificationCoalescer.summarize(batch.map(\.notice)) {
+            content = NotificationContent(summary: summary)
+        } else {
+            content = batch[0].content
+        }
+
         for notifier in notifiers {
             notifier.deliver(content)
         }
@@ -113,9 +169,17 @@ final class EventBus {
         attentionExpiry?.cancel()
         hasActiveAttention = false
         save()
+        recomputeSummary()
     }
 
-    private func persist(_ message: RelayMessage) {
+    /// Snooze a session's banners until `date` (or clear with `nil`).
+    func snooze(_ session: AgentSession, until date: Date?) {
+        session.snoozedUntil = date
+        save()
+    }
+
+    @discardableResult
+    private func persist(_ message: RelayMessage) -> AgentSession {
         let session = upsertSession(for: message)
         session.lastActivityAt = message.timestamp
         session.state = message.kind.resultingState
@@ -134,6 +198,7 @@ final class EventBus {
         event.session = session
         modelContext.insert(event)
         save()
+        return session
     }
 
     private func upsertSession(for message: RelayMessage) -> AgentSession {
@@ -164,6 +229,7 @@ final class EventBus {
     private func recomputeSummary() {
         workingCount = count(of: .working)
         waitingCount = count(of: .waiting)
+        attentionBadgeCount = fetchUnseenAttentionCount()
     }
 
     private func count(of state: SessionState) -> Int {
@@ -172,7 +238,7 @@ final class EventBus {
         return (try? modelContext.fetchCount(descriptor)) ?? 0
     }
 
-    private var unseenAttentionCount: Int {
+    private func fetchUnseenAttentionCount() -> Int {
         let waiting = SessionState.waiting.rawValue
         let descriptor = FetchDescriptor<AgentSession>(
             predicate: #Predicate { $0.stateRaw == waiting && $0.acknowledgedAt == nil }
@@ -182,7 +248,7 @@ final class EventBus {
 
     private func refreshAttention() {
         hasActiveAttention = AttentionPolicy.isActive(
-            unseenCount: unseenAttentionCount,
+            unseenCount: fetchUnseenAttentionCount(),
             lastAttentionAt: lastAttentionAt,
             now: Date(),
             ttl: attentionTTL

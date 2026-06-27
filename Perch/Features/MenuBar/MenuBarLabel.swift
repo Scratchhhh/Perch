@@ -24,14 +24,22 @@ enum MenuBarState: Equatable {
 
 struct MenuBarLabel: View {
     let state: MenuBarState
+    var badgeCount: Int = 0
 
     var body: some View {
-        Image(systemName: state.symbolName)
-            .symbolRenderingMode(.hierarchical)
-            .contentTransition(.symbolEffect(.replace))
-            .modifier(StateEffect(state: state))
-            .animation(.smooth(duration: 0.3), value: state)
-            .accessibilityLabel(state.accessibilityLabel)
+        HStack(spacing: 3) {
+            Image(systemName: state.symbolName)
+                .symbolRenderingMode(.hierarchical)
+                .contentTransition(.symbolEffect(.replace))
+                .modifier(StateEffect(state: state))
+            if badgeCount > 0 {
+                Text("\(badgeCount)")
+                    .font(.system(size: 11, weight: .bold).monospacedDigit())
+            }
+        }
+        .animation(.smooth(duration: 0.3), value: state)
+        .animation(.smooth(duration: 0.3), value: badgeCount)
+        .accessibilityLabel(badgeCount > 0 ? "\(state.accessibilityLabel), \(badgeCount) waiting" : state.accessibilityLabel)
     }
 }
 

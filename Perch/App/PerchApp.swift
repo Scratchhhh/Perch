@@ -11,7 +11,10 @@ struct PerchApp: App {
                 .environment(environment.preferences)
                 .modelContainer(environment.modelContainer)
         } label: {
-            MenuBarLabel(state: environment.menuBarState)
+            MenuBarLabel(
+                state: environment.menuBarState,
+                badgeCount: environment.eventBus.attentionBadgeCount
+            )
         }
         .menuBarExtraStyle(.window)
 

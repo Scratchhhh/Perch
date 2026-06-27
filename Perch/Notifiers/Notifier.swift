@@ -23,6 +23,26 @@ struct NotificationContent: Sendable {
     let projectPath: String?
     let source: AgentSource
 
+    /// Delivery overrides resolved from the project rule (see `PreferencesStore.rule(for:)`).
+    var playSound: Bool = true
+    var soundVolume: Float = 1.0
+
+    /// Builds the summary banner for a coalesced burst of events.
+    init(summary: CoalescedSummary) {
+        title = summary.title
+        body = summary.body
+        sessionId = ""
+        projectPath = nil
+        source = .unknown
+        if summary.primaryKind.demandsAttention {
+            category = .attention
+        } else if summary.primaryKind == .finished {
+            category = .done
+        } else {
+            category = .info
+        }
+    }
+
     init(from message: RelayMessage) {
         sessionId = message.sessionId
         projectPath = message.project
