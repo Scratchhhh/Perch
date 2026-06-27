@@ -11,9 +11,9 @@ final class LocalNotifier: NSObject, Notifier {
     private let center = UNUserNotificationCenter.current()
     private let preferences: PreferencesStore
 
-    /// A file-URL copy of the app icon, attached to every banner so Perch's mascot shows up even
-    /// for a menu-bar (accessory) app where the system sometimes falls back to a generic glyph.
-    private lazy var iconAttachmentURL: URL? = Self.makeIconAttachment()
+    /// The app icon as PNG, attached to each banner so Perch shows up even before LaunchServices
+    /// has cached the bundle icon for an accessory (menu-bar) app.
+    private lazy var iconPNG: Data? = Self.makeIconPNG()
 
     private enum CategoryID {
         static let done = "perch.done"
@@ -48,8 +48,7 @@ final class LocalNotifier: NSObject, Notifier {
             "sessionId": content.sessionId,
             "projectPath": content.projectPath ?? ""
         ]
-        if let url = iconAttachmentURL,
-           let attachment = try? UNNotificationAttachment(identifier: "perch-icon", url: url) {
+        if let attachment = makeIconAttachment() {
             note.attachments = [attachment]
         }
 
@@ -76,20 +75,27 @@ final class LocalNotifier: NSObject, Notifier {
         }
     }
 
-    private static func makeIconAttachment() -> URL? {
+    /// UNNotificationAttachment takes ownership of the file (moves it out of its location), so each
+    /// banner needs its own copy rather than reusing one path.
+    private func makeIconAttachment() -> UNNotificationAttachment? {
+        guard let iconPNG else { return nil }
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("perch-icon-\(UUID().uuidString).png")
+        do {
+            try iconPNG.write(to: url, options: .atomic)
+            return try UNNotificationAttachment(identifier: "perch-icon", url: url)
+        } catch {
+            PerchLog.notifier.error("icon attachment failed: \(error.localizedDescription, privacy: .public)")
+            return nil
+        }
+    }
+
+    private static func makeIconPNG() -> Data? {
         let icon = NSApp.applicationIconImage ?? NSImage(named: NSImage.applicationIconName)
         guard let icon,
               let tiff = icon.tiffRepresentation,
-              let rep = NSBitmapImageRep(data: tiff),
-              let png = rep.representation(using: .png, properties: [:]) else { return nil }
-        let url = FileManager.default.temporaryDirectory.appendingPathComponent("perch-notification-icon.png")
-        do {
-            try png.write(to: url, options: .atomic)
-            return url
-        } catch {
-            PerchLog.notifier.error("icon attachment write failed: \(error.localizedDescription, privacy: .public)")
-            return nil
-        }
+              let rep = NSBitmapImageRep(data: tiff) else { return nil }
+        return rep.representation(using: .png, properties: [:])
     }
 
     private func registerCategories() {
