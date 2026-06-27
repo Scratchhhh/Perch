@@ -15,7 +15,10 @@ settings:
     CODE_SIGN_STYLE: Manual
     CODE_SIGN_IDENTITY: "-"
     DEVELOPMENT_TEAM: ""
-    ENABLE_HARDENED_RUNTIME: YES
+    # Off for the ad-hoc local build: hardened runtime enables library validation, which rejects
+    # the ad-hoc-signed embedded PerchCore.framework at load time. Turn this back on together with
+    # a Developer ID identity when building for notarized distribution.
+    ENABLE_HARDENED_RUNTIME: NO
     CLANG_ENABLE_MODULES: YES
     GCC_TREAT_WARNINGS_AS_ERRORS: NO
 
